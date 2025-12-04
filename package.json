@@ -15,8 +15,7 @@
     "type-check": "tsc --pretty --noEmit",
     "type-check:watch": "tsc --pretty --noEmit --watch",
     "clean": "rm -rf dist node_modules/.cache .vite",
-    "check-all": "npm run format:check && npm run lint && npm run type-check",
-    "prepare": "husky install"
+    "check-all": "npm run format:check && npm run lint && npm run type-check"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
