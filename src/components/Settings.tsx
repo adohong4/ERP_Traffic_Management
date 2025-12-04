@@ -1,27 +1,39 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Switch } from './ui/switch';
-import { Separator } from './ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { 
-  Settings as SettingsIcon, 
-  User, 
-  Bell, 
-  Shield, 
-  Palette, 
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "./ui/card";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Switch } from "./ui/switch";
+import { Separator } from "./ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import {
+  Settings as SettingsIcon,
+  User,
+  Bell,
+  Shield,
+  Palette,
   Database,
   Save,
   Key,
   Mail,
   Phone,
-  Building2
-} from 'lucide-react';
-import { useBreadcrumb } from './BreadcrumbContext';
+  Building2,
+} from "lucide-react";
+import { useBreadcrumb } from "./BreadcrumbContext";
 
 export default function Settings() {
   const { setBreadcrumbs, resetBreadcrumbs } = useBreadcrumb();
@@ -31,13 +43,13 @@ export default function Settings() {
     push: true,
     violations: true,
     expiryReminders: true,
-    inspectionReminders: true
+    inspectionReminders: true,
   });
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: 'Trang chính', isHome: true },
-      { label: 'Cài đặt' }
+      { label: "Trang chính", isHome: true },
+      { label: "Cài đặt" },
     ]);
 
     return () => {
@@ -46,7 +58,7 @@ export default function Settings() {
   }, [setBreadcrumbs, resetBreadcrumbs]);
 
   const handleNotificationChange = (key: string, value: boolean) => {
-    setNotifications(prev => ({ ...prev, [key]: value }));
+    setNotifications((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -61,7 +73,7 @@ export default function Settings() {
           <div>
             <h2 className="text-3xl">Cài đặt hệ thống</h2>
             <p className="text-muted-foreground mt-1">
-              Quản lý cấu hình và tùy chỉnh hệ thống ERP GPLX
+              Quản lý cấu hình và tùy chỉnh hệ thống QLTT
             </p>
           </div>
         </div>
@@ -122,11 +134,11 @@ export default function Settings() {
                     <Label htmlFor="email">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        id="email" 
-                        type="email" 
+                      <Input
+                        id="email"
+                        type="email"
                         className="pl-8"
-                        defaultValue="admin@conganbonganh.gov.vn" 
+                        defaultValue="admin@conganbonganh.gov.vn"
                       />
                     </div>
                   </div>
@@ -134,11 +146,11 @@ export default function Settings() {
                     <Label htmlFor="phone">Số điện thoại</Label>
                     <div className="relative">
                       <Phone className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        id="phone" 
-                        type="tel" 
+                      <Input
+                        id="phone"
+                        type="tel"
                         className="pl-8"
-                        defaultValue="0912345678" 
+                        defaultValue="0912345678"
                       />
                     </div>
                   </div>
@@ -148,10 +160,10 @@ export default function Settings() {
                   <Label htmlFor="department">Phòng ban</Label>
                   <div className="relative">
                     <Building2 className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="department" 
+                    <Input
+                      id="department"
                       className="pl-8"
-                      defaultValue="Phòng CSGT Hà Nội" 
+                      defaultValue="Phòng CSGT Hà Nội"
                     />
                   </div>
                 </div>
@@ -201,9 +213,11 @@ export default function Settings() {
                           Nhận thông báo qua email
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.email}
-                        onCheckedChange={(value) => handleNotificationChange('email', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("email", value)
+                        }
                       />
                     </div>
                     <Separator />
@@ -214,9 +228,11 @@ export default function Settings() {
                           Nhận thông báo qua tin nhắn SMS
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.sms}
-                        onCheckedChange={(value) => handleNotificationChange('sms', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("sms", value)
+                        }
                       />
                     </div>
                     <Separator />
@@ -227,9 +243,11 @@ export default function Settings() {
                           Nhận thông báo đẩy trên trình duyệt
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.push}
-                        onCheckedChange={(value) => handleNotificationChange('push', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("push", value)
+                        }
                       />
                     </div>
                   </div>
@@ -247,9 +265,11 @@ export default function Settings() {
                           Thông báo khi có vi phạm mới được ghi nhận
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.violations}
-                        onCheckedChange={(value) => handleNotificationChange('violations', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("violations", value)
+                        }
                       />
                     </div>
                     <Separator />
@@ -260,9 +280,11 @@ export default function Settings() {
                           Thông báo trước khi GPLX sắp hết hạn
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.expiryReminders}
-                        onCheckedChange={(value) => handleNotificationChange('expiryReminders', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("expiryReminders", value)
+                        }
                       />
                     </div>
                     <Separator />
@@ -273,9 +295,11 @@ export default function Settings() {
                           Thông báo khi xe sắp đến hạn đăng kiểm
                         </p>
                       </div>
-                      <Switch 
+                      <Switch
                         checked={notifications.inspectionReminders}
-                        onCheckedChange={(value) => handleNotificationChange('inspectionReminders', value)}
+                        onCheckedChange={(value) =>
+                          handleNotificationChange("inspectionReminders", value)
+                        }
                       />
                     </div>
                   </div>
@@ -305,9 +329,9 @@ export default function Settings() {
                   <Label htmlFor="currentPassword">Mật khẩu hiện tại</Label>
                   <div className="relative">
                     <Key className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="currentPassword" 
-                      type="password" 
+                    <Input
+                      id="currentPassword"
+                      type="password"
                       className="pl-8"
                       placeholder="Nhập mật khẩu hiện tại"
                     />
@@ -318,9 +342,9 @@ export default function Settings() {
                   <Label htmlFor="newPassword">Mật khẩu mới</Label>
                   <div className="relative">
                     <Key className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="newPassword" 
-                      type="password" 
+                    <Input
+                      id="newPassword"
+                      type="password"
                       className="pl-8"
                       placeholder="Nhập mật khẩu mới"
                     />
@@ -331,9 +355,9 @@ export default function Settings() {
                   <Label htmlFor="confirmPassword">Xác nhận mật khẩu mới</Label>
                   <div className="relative">
                     <Key className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="confirmPassword" 
-                      type="password" 
+                    <Input
+                      id="confirmPassword"
+                      type="password"
                       className="pl-8"
                       placeholder="Nhập lại mật khẩu mới"
                     />
@@ -369,7 +393,9 @@ export default function Settings() {
                     <Switch defaultChecked={true} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="sessionTimeout">Thời gian timeout (phút)</Label>
+                    <Label htmlFor="sessionTimeout">
+                      Thời gian timeout (phút)
+                    </Label>
                     <Select defaultValue="30">
                       <SelectTrigger id="sessionTimeout">
                         <SelectValue />
@@ -399,9 +425,7 @@ export default function Settings() {
             <Card>
               <CardHeader>
                 <CardTitle>Giao diện</CardTitle>
-                <CardDescription>
-                  Tùy chỉnh giao diện hệ thống
-                </CardDescription>
+                <CardDescription>Tùy chỉnh giao diện hệ thống</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -452,7 +476,9 @@ export default function Settings() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="utc+7">GMT+7 (Giờ Việt Nam)</SelectItem>
+                      <SelectItem value="utc+7">
+                        GMT+7 (Giờ Việt Nam)
+                      </SelectItem>
                       <SelectItem value="utc+0">GMT+0 (UTC)</SelectItem>
                     </SelectContent>
                   </Select>

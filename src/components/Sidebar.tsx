@@ -1,6 +1,6 @@
-import { motion } from 'motion/react';
-import { Button } from './ui/button';
-import { FileText, ChevronRight, X } from 'lucide-react';
+import { motion } from "motion/react";
+import { Button } from "./ui/button";
+import { FileText, ChevronRight, X } from "lucide-react";
 
 interface MenuItem {
   id: string;
@@ -26,21 +26,23 @@ export default function Sidebar({
   isDesktop,
   onMenuClick,
   onToggleCollapse,
-  onClose
+  onClose,
 }: SidebarProps) {
   return (
     <motion.aside
       initial={{ x: -300 }}
-      animate={{ 
+      animate={{
         x: 0,
-        width: sidebarCollapsed ? '80px' : '256px'
+        width: sidebarCollapsed ? "80px" : "256px",
       }}
       exit={{ x: -300 }}
-      transition={{ type: 'spring', damping: 20 }}
+      transition={{ type: "spring", damping: 20 }}
       className="fixed md:static inset-y-0 left-0 z-50 border-r border-cyan-400/20 flex flex-col shadow-2xl shadow-cyan-500/20"
       style={{
-        background: 'linear-gradient(180deg, #0a1929 0%, #0d2438 50%, #0a1929 100%)',
-        boxShadow: '0 0 40px rgba(34, 211, 238, 0.2), inset 0 0 60px rgba(34, 211, 238, 0.05)'
+        background:
+          "linear-gradient(180deg, #0a1929 0%, #0d2438 50%, #0a1929 100%)",
+        boxShadow:
+          "0 0 40px rgba(34, 211, 238, 0.2), inset 0 0 60px rgba(34, 211, 238, 0.05)",
       }}
     >
       {/* Logo + Collapse Toggle */}
@@ -50,9 +52,11 @@ export default function Sidebar({
             <>
               <div className="flex-1">
                 <h1 className="text-xl bg-gradient-to-r from-cyan-400 via-blue-400 to-teal-400 bg-clip-text text-transparent font-bold">
-                  ERP GPLX
+                  Bộ Công an
                 </h1>
-                <p className="text-xs text-cyan-300/70 mt-1">Bộ Công an</p>
+                <p className="text-xs text-cyan-300/70 mt-1">
+                  Quản lý thông tin
+                </p>
               </div>
               {/* Collapse button - same row */}
               <Button
@@ -114,22 +118,24 @@ export default function Sidebar({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
               onClick={() => onMenuClick(item.id)}
-              className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center px-2' : 'gap-3 px-4'} py-3 rounded-xl transition-all relative group ${
+              className={`w-full flex items-center ${sidebarCollapsed ? "justify-center px-2" : "gap-3 px-4"} py-3 rounded-xl transition-all relative group ${
                 isActive
-                  ? 'bg-gradient-to-r from-cyan-500/90 to-blue-500/90 text-white shadow-lg shadow-cyan-500/50'
-                  : 'text-cyan-200 hover:bg-cyan-500/10 hover:text-white'
+                  ? "bg-gradient-to-r from-cyan-500/90 to-blue-500/90 text-white shadow-lg shadow-cyan-500/50"
+                  : "text-cyan-200 hover:bg-cyan-500/10 hover:text-white"
               }`}
-              title={sidebarCollapsed ? item.label : ''}
+              title={sidebarCollapsed ? item.label : ""}
             >
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
                   className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl"
-                  style={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.6)' }}
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                  style={{ boxShadow: "0 0 20px rgba(34, 211, 238, 0.6)" }}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
-              <Icon className={`h-5 w-5 relative z-10 ${isActive ? 'drop-shadow-lg' : ''}`} />
+              <Icon
+                className={`h-5 w-5 relative z-10 ${isActive ? "drop-shadow-lg" : ""}`}
+              />
               {!sidebarCollapsed && (
                 <span className="relative z-10">{item.label}</span>
               )}
