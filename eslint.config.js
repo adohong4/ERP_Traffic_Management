@@ -1,12 +1,13 @@
 import js from "@eslint/js";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "react-refresh";
 import tseslint from "typescript-eslint";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
 import prettier from "eslint-plugin-prettier/recommended";
 
 export default tseslint.config(
     { ignores: ["dist", ".vite", "node_modules"] },
+
     {
         extends: [
             js.configs.recommended,
@@ -24,15 +25,15 @@ export default tseslint.config(
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
+
             "react-refresh/only-export-components": [
                 "warn",
                 { allowConstantExport: true },
             ],
-            // Một số rule phổ biến mà team Việt Nam hay dùng
+
+            "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
             "@typescript-eslint/no-explicit-any": "warn",
-            "@typescript-eslint/no-unused-vars": "error",
             "no-console": "warn",
-            "prefer-const": "error",
         },
     }
 );
