@@ -1,15 +1,20 @@
 import { createConfig, http } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
-import { mockInjected } from './mockConnector';
+import { mainnet, base, optimism } from 'wagmi/chains';
+import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 
-// Simplified config with mock connector to avoid MetaMask SDK loading issues
+const projectId = '49686bebdea901a178af5e8ac4845f65'
+
 export const config = createConfig({
-  chains: [mainnet],
+  chains: [mainnet, base, optimism],
   connectors: [
-    mockInjected(),
+    walletConnect({ projectId, showQrModal: true, }),
+    metaMask(),
+    injected()
   ],
   transports: {
     [mainnet.id]: http(),
+    [base.id]: http(),
+    [optimism.id]: http(),
   },
   ssr: false,
 });

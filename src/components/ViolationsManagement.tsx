@@ -118,7 +118,7 @@ export default function ViolationsManagement() {
       key: 'plateNumber',
       header: 'Biển số',
       sortable: true,
-      width: '110px',
+      width: '140px',
       render: (v) => (
         <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200 font-mono">
           {v.plateNumber}
@@ -140,14 +140,14 @@ export default function ViolationsManagement() {
     {
       key: 'location',
       header: 'Địa điểm',
-      width: '170px',
+      width: '190px',
       render: (v) => <span className="text-sm text-muted-foreground text-left block truncate" title={v.location}>{v.location}</span>
     },
     {
       key: 'date',
       header: 'Thời gian',
       sortable: true,
-      width: '130px',
+      width: '150px',
       render: (v) => (
         <div className="text-left w-full">
           <div className="text-sm">{new Date(v.date).toLocaleDateString('vi-VN')}</div>
@@ -159,7 +159,7 @@ export default function ViolationsManagement() {
       key: 'fine',
       header: 'Tiền phạt',
       sortable: true,
-      width: '100px',
+      width: '130px',
       render: (v) => (
         <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
           {(v.fine / 1000000).toFixed(1)}M
@@ -170,7 +170,7 @@ export default function ViolationsManagement() {
       key: 'points',
       header: 'Điểm trừ',
       sortable: true,
-      width: '90px',
+      width: '100px',
       render: (v) => (
         <Badge variant={v.points >= 5 ? 'destructive' : 'secondary'} className={v.points >= 5 ? 'bg-[#FEE2E2] text-red-700' : 'bg-gray-100 text-gray-700'}>
           {v.points}
@@ -180,14 +180,14 @@ export default function ViolationsManagement() {
     {
       key: 'officer',
       header: 'CSGT xử lý',
-      width: '140px',
+      width: '180px',
       render: (v) => <span className="text-sm text-muted-foreground truncate" title={v.officer}>{v.officer}</span>
     },
     {
       key: 'status',
       header: 'Trạng thái',
       sortable: true,
-      width: '120px',
+      width: '130px',
       render: (v) => {
         const config = statusConfig[v.status];
         return (
@@ -206,9 +206,9 @@ export default function ViolationsManagement() {
           <TooltipProvider>
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => {
                     setSelectedViolation(v);
@@ -223,9 +223,9 @@ export default function ViolationsManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => {
                     setSelectedViolation(v);
@@ -240,9 +240,9 @@ export default function ViolationsManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="h-8 w-8 hover:bg-red-50 hover:text-red-600"
                   onClick={() => toast.success('Đã xóa vi phạm thành công!')}
                 >
@@ -299,7 +299,7 @@ export default function ViolationsManagement() {
             {/* Title removed - already in navbar */}
           </div>
           <div className="flex gap-2">
-            <Button 
+            <Button
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg shadow-cyan-500/30"
               onClick={() => setViewMode('add')}
             >
@@ -327,10 +327,10 @@ export default function ViolationsManagement() {
         <StatCard
           title="Tổng tiền phạt"
           value={`${(totalFines / 1000000).toFixed(1)}M VNĐ`}
-          subtitle={`Đã thu ${Math.round((paidFines/totalFines) * 100)}%`}
+          subtitle={`Đã thu ${Math.round((paidFines / totalFines) * 100)}%`}
           icon={DollarSign}
           color="purple"
-          progress={Math.round((paidFines/totalFines) * 100)}
+          progress={Math.round((paidFines / totalFines) * 100)}
           delay={0.15}
         />
         <StatCard
@@ -351,7 +351,7 @@ export default function ViolationsManagement() {
           delay={0.25}
         />
       </div>
-      
+
       {/* Placeholder to complete the refactor */}
       <div className="hidden">
         {[].map((stat, index) => {
@@ -484,7 +484,7 @@ export default function ViolationsManagement() {
           getItemKey={(v) => v.id}
           onExport={() => console.log('Exporting violations...')}
         />
-        
+
         {/* Action Legend */}
         <motion.div
           initial={{ opacity: 0 }}
