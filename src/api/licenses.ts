@@ -35,7 +35,7 @@ const paginate = <T>(items: T[], page: number = 1, limit: number = 10) => {
   const totalPages = Math.ceil(total / limit);
   const offset = (page - 1) * limit;
   const paginatedItems = items.slice(offset, offset + limit);
-  
+
   return {
     items: paginatedItems,
     pagination: {
@@ -73,7 +73,7 @@ export const getLicenses = async (params: GetLicensesParams = {}): Promise<GetLi
 
     if (search) {
       const searchLower = search.toLowerCase();
-      filtered = filtered.filter(l => 
+      filtered = filtered.filter(l =>
         l.holderName.toLowerCase().includes(searchLower) ||
         l.licenseNumber.toLowerCase().includes(searchLower) ||
         l.idCard.includes(searchLower)
@@ -112,12 +112,12 @@ export const getLicenses = async (params: GetLicensesParams = {}): Promise<GetLi
     filtered.sort((a, b) => {
       let aVal: any = a[sortBy as keyof typeof a];
       let bVal: any = b[sortBy as keyof typeof b];
-      
+
       if (sortBy === 'issueDate' || sortBy === 'expiryDate') {
         aVal = new Date(aVal).getTime();
         bVal = new Date(bVal).getTime();
       }
-      
+
       if (sortOrder === 'asc') {
         return aVal > bVal ? 1 : -1;
       } else {
@@ -141,9 +141,9 @@ export const getLicenses = async (params: GetLicensesParams = {}): Promise<GetLi
 export const getLicenseById = async (params: GetLicenseByIdParams): Promise<GetLicenseByIdResponse | ApiError> => {
   try {
     const { id } = params;
-    
+
     const license = licenses.find(l => l.id === id);
-    
+
     if (!license) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }
@@ -177,7 +177,7 @@ export const createLicense = async (body: CreateLicenseBody): Promise<CreateLice
 
     // Generate license number
     const licenseNumber = `GPLX${Date.now().toString().slice(-8)}`;
-    
+
     // Create new license
     const newLicense = {
       id: `lic_${Date.now()}`,
@@ -211,7 +211,7 @@ export const createLicense = async (body: CreateLicenseBody): Promise<CreateLice
 export const updateLicense = async (id: string, body: UpdateLicenseBody): Promise<UpdateLicenseResponse | ApiError> => {
   try {
     const licenseIndex = licenses.findIndex(l => l.id === id);
-    
+
     if (licenseIndex === -1) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }
@@ -237,7 +237,7 @@ export const updateLicense = async (id: string, body: UpdateLicenseBody): Promis
 export const deleteLicense = async (id: string): Promise<DeleteLicenseResponse | ApiError> => {
   try {
     const license = licenses.find(l => l.id === id);
-    
+
     if (!license) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }
@@ -259,7 +259,7 @@ export const deleteLicense = async (id: string): Promise<DeleteLicenseResponse |
 export const renewLicense = async (id: string): Promise<UpdateLicenseResponse | ApiError> => {
   try {
     const licenseIndex = licenses.findIndex(l => l.id === id);
-    
+
     if (licenseIndex === -1) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }
@@ -291,7 +291,7 @@ export const renewLicense = async (id: string): Promise<UpdateLicenseResponse | 
 export const suspendLicense = async (id: string, reason: string): Promise<UpdateLicenseResponse | ApiError> => {
   try {
     const licenseIndex = licenses.findIndex(l => l.id === id);
-    
+
     if (licenseIndex === -1) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }
@@ -316,7 +316,7 @@ export const suspendLicense = async (id: string, reason: string): Promise<Update
 export const revokeLicense = async (id: string, reason: string): Promise<UpdateLicenseResponse | ApiError> => {
   try {
     const licenseIndex = licenses.findIndex(l => l.id === id);
-    
+
     if (licenseIndex === -1) {
       return createError('LICENSE_NOT_FOUND', `License with id ${id} not found`);
     }

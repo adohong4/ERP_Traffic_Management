@@ -2,12 +2,16 @@
   "compilerOptions": {
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
-    "types": ["vite/client"],
-
+    "types": [
+      "vite/client"
+    ],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -15,28 +19,39 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["./components/*"],
-      "@/components/atoms": ["./components/atoms"],
-      "@/components/molecules": ["./components/molecules"],
-      "@/components/organisms": ["./components/organisms"],
-      "@/components/templates": ["./components/templates"],
-      "@/components/ui/*": ["./components/ui/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/config/*": ["./config/*"],
-      "@/styles/*": ["./styles/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
+      ],
+      "@/api/*": [
+        "src/api/*"
+      ],
+      "@/config/*": [
+        "src/config/*"
+      ],
+      "@/styles/*": [
+        "src/styles/*"
+      ],
+      "@/types/*": [
+        "src/types/*"
+      ]
     }
   },
   "include": [
@@ -48,5 +63,9 @@
     "dist",
     "build"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

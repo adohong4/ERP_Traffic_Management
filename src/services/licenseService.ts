@@ -1,5 +1,5 @@
-import { licenseApi } from '@/api';
-import { mockLicenses, mockLicenseApplications } from '@/lib/mockData';
+import { licenseApi } from '@/api/modules/license.api';
+import { mockLicenses, mockLicenseApplications } from '@/lib/mockData/licenseData';
 import type { DriverLicense, LicenseApplication } from '@/types';
 
 /**
@@ -279,7 +279,7 @@ function validateLicenseData(data: Partial<DriverLicense>): void {
 /**
  * Generate license number
  */
-function generateLicenseNumber(): string => {
+const generateLicenseNumber = (): string => {
   const timestamp = Date.now().toString();
   const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   return `${timestamp.slice(-9)}${random}`;
