@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Button } from "./ui/button";
 import { FileText, ChevronRight, X } from "lucide-react";
+import { Logo } from "../assets";
 
 interface MenuItem {
   id: string;
@@ -76,7 +77,8 @@ export default function Sidebar({
           ) : (
             <div className="w-full flex flex-col items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/50">
-                <FileText className="h-5 w-5 text-white" />
+                {/* <FileText className="h-5 w-5 text-white" /> */}
+                <img src={Logo} alt="Logo" className="h-8 w-8" />
               </div>
               {/* Collapse button when collapsed */}
               <Button
