@@ -135,11 +135,11 @@ export default function Header({
             ) : (
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-lg bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent font-semibold">
+                  <h2 className="text-xl bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent font-semibold">
                     {menuItems.find((item) => item.id === activeMenu)?.label}
                   </h2>
                   <p className="text-xs text-slate-600">
-                    Hệ thống quản lý GPLX và đăng kiểm
+                    Hệ thống quản lý thông tin giao thông
                   </p>
                 </div>
                 {userConfig && <PermissionBadge />}

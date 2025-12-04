@@ -1,9 +1,15 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { 
+import { useState } from "react";
+import { motion } from "motion/react";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
   Eye,
   Edit,
   Trash2,
@@ -11,26 +17,31 @@ import {
   TrendingUp,
   FileText,
   Users,
-  Newspaper
-} from 'lucide-react';
-import { newsArticles, News } from '../lib/mockData';
-import ModernDataTable, { ColumnDef, FilterConfig } from './ModernDataTable';
-import { Tooltip as TooltipUI, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
-import { toast } from 'sonner';
-import NewsDetailPage from './NewsDetailPage';
-import NewsAddEdit from './NewsAddEdit';
+  Newspaper,
+} from "lucide-react";
+import { newsArticles, News } from "../lib/mockData";
+import ModernDataTable, { ColumnDef, FilterConfig } from "./ModernDataTable";
+import {
+  Tooltip as TooltipUI,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { toast } from "sonner";
+import NewsDetailPage from "./NewsDetailPage";
+import NewsAddEdit from "./NewsAddEdit";
 
 const categoryConfig = {
-  'traffic-law': { label: 'Luật giao thông', color: 'bg-red-500' },
-  'announcement': { label: 'Thông báo', color: 'bg-blue-500' },
-  'guide': { label: 'Hướng dẫn', color: 'bg-green-500' },
-  'news': { label: 'Tin tức', color: 'bg-purple-500' }
+  "traffic-law": { label: "Luật giao thông", color: "bg-red-500" },
+  announcement: { label: "Thông báo", color: "bg-blue-500" },
+  guide: { label: "Hướng dẫn", color: "bg-green-500" },
+  news: { label: "Tin tức", color: "bg-purple-500" },
 };
 
 const statusConfig = {
-  published: { label: 'Đã đăng', color: 'bg-green-500' },
-  draft: { label: 'Nháp', color: 'bg-gray-500' },
-  archived: { label: 'Lưu trữ', color: 'bg-yellow-500' }
+  published: { label: "Đã đăng", color: "bg-green-500" },
+  draft: { label: "Nháp", color: "bg-gray-500" },
+  archived: { label: "Lưu trữ", color: "bg-yellow-500" },
 };
 
 interface StatCardProps {
@@ -41,15 +52,27 @@ interface StatCardProps {
   color: string;
 }
 
-function StatCard({ title, value, subtitle, icon: Icon, color }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  subtitle,
+  icon: Icon,
+  color,
+}: StatCardProps) {
   return (
     <Card className="overflow-hidden relative group hover:shadow-lg transition-all duration-300">
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} opacity-10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-300`}></div>
+      <div
+        className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} opacity-10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-300`}
+      ></div>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardDescription className="text-sm">{title}</CardDescription>
-          <div className={`p-2 rounded-lg bg-gradient-to-br ${color} bg-opacity-10`}>
-            <Icon className={`h-4 w-4 ${color.replace('from-', 'text-').split(' ')[0]}`} />
+          <div
+            className={`p-2 rounded-lg bg-gradient-to-br ${color} bg-opacity-10`}
+          >
+            <Icon
+              className={`h-4 w-4 ${color.replace("from-", "text-").split(" ")[0]}`}
+            />
           </div>
         </div>
       </CardHeader>
@@ -62,44 +85,54 @@ function StatCard({ title, value, subtitle, icon: Icon, color }: StatCardProps) 
 }
 
 export default function NewsManagement() {
-  const [viewMode, setViewMode] = useState<'list' | 'detail' | 'add' | 'edit'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "detail" | "add" | "edit">(
+    "list"
+  );
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
 
-  const categories = Array.from(new Set(newsArticles.map(n => n.category)));
+  const categories = Array.from(new Set(newsArticles.map((n) => n.category)));
 
   const handleViewDetail = (news: News) => {
     setSelectedNews(news);
-    setViewMode('detail');
+    setViewMode("detail");
   };
 
   const handleEditNews = (news: News) => {
     setSelectedNews(news);
-    setViewMode('edit');
+    setViewMode("edit");
   };
 
   const handleAddNews = () => {
     setSelectedNews(null);
-    setViewMode('add');
+    setViewMode("add");
   };
 
   const handleBack = () => {
     setSelectedNews(null);
-    setViewMode('list');
+    setViewMode("list");
   };
 
-  if (viewMode === 'detail' && selectedNews) {
-    return <NewsDetailPage news={selectedNews} onBack={handleBack} onEdit={() => handleEditNews(selectedNews)} />;
+  if (viewMode === "detail" && selectedNews) {
+    return (
+      <NewsDetailPage
+        news={selectedNews}
+        onBack={handleBack}
+        onEdit={() => handleEditNews(selectedNews)}
+      />
+    );
   }
 
-  if (viewMode === 'add' || viewMode === 'edit') {
-    return <NewsAddEdit news={selectedNews} onBack={handleBack} mode={viewMode} />;
+  if (viewMode === "add" || viewMode === "edit") {
+    return (
+      <NewsAddEdit news={selectedNews} onBack={handleBack} mode={viewMode} />
+    );
   }
 
   const columns: ColumnDef<News>[] = [
     {
-      key: 'title',
-      header: 'Tiêu đề',
-      width: '35%',
+      key: "title",
+      header: "Tiêu đề",
+      width: "35%",
       render: (news) => (
         <div className="space-y-1">
           <div className="flex items-start gap-2">
@@ -108,64 +141,66 @@ export default function NewsManagement() {
             )}
             <div className="line-clamp-2 font-medium">{news.title}</div>
           </div>
-          <div className="text-xs text-muted-foreground line-clamp-1">{news.summary}</div>
+          <div className="text-xs text-muted-foreground line-clamp-1">
+            {news.summary}
+          </div>
         </div>
-      )
+      ),
     },
     {
-      key: 'category',
-      header: 'Danh mục',
-      width: '12%',
+      key: "category",
+      header: "Danh mục",
+      width: "12%",
       render: (news) => (
         <Badge className={`${categoryConfig[news.category].color} text-white`}>
           {categoryConfig[news.category].label}
         </Badge>
-      )
+      ),
     },
     {
-      key: 'author',
-      header: 'Tác giả',
-      width: '15%',
-      render: (news) => <span>{news.author}</span>
+      key: "author",
+      header: "Tác giả",
+      width: "15%",
+      render: (news) => <span>{news.author}</span>,
     },
     {
-      key: 'publishDate',
-      header: 'Ngày đăng',
-      width: '12%',
-      render: (news) => new Date(news.publishDate).toLocaleDateString('vi-VN')
+      key: "publishDate",
+      header: "Ngày đăng",
+      width: "12%",
+      render: (news) => new Date(news.publishDate).toLocaleDateString("vi-VN"),
     },
     {
-      key: 'views',
-      header: 'Lượt xem',
-      width: '10%',
+      key: "views",
+      header: "Lượt xem",
+      width: "9%",
       render: (news) => (
         <div className="flex items-center gap-1">
           <Eye className="h-3 w-3 text-muted-foreground" />
-          <span>{news.views.toLocaleString('vi-VN')}</span>
+          <span>{news.views.toLocaleString("vi-VN")}</span>
         </div>
-      )
+      ),
     },
     {
-      key: 'status',
-      header: 'Trạng thái',
-      width: '10%',
+      key: "status",
+      header: "Trạng thái",
+      width: "8%",
       render: (news) => (
         <Badge className={`${statusConfig[news.status].color} text-white`}>
           {statusConfig[news.status].label}
         </Badge>
-      )
+      ),
     },
     {
-      key: 'actions',
-      header: 'Thao tác',
-      width: '120px',
+      key: "actions",
+      header: "Thao tác",
+      width: "100px",
       render: (news) => (
         <div className="flex justify-center gap-1">
           <TooltipProvider>
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => handleViewDetail(news)}
@@ -180,8 +215,8 @@ export default function NewsManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => handleEditNews(news)}
@@ -196,11 +231,11 @@ export default function NewsManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-red-50 hover:text-red-600"
-                  onClick={() => toast.success('Đã xóa tin tức thành công!')}
+                  onClick={() => toast.success("Đã xóa tin tức thành công!")}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -211,41 +246,41 @@ export default function NewsManagement() {
             </TooltipUI>
           </TooltipProvider>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const filters: FilterConfig[] = [
     {
-      key: 'category',
-      label: 'Danh mục',
+      key: "category",
+      label: "Danh mục",
       options: [
-        { value: 'all', label: 'Tất cả' },
-        ...categories.map(cat => ({ 
-          value: cat, 
-          label: categoryConfig[cat].label 
-        }))
-      ]
+        { value: "all", label: "Tất cả" },
+        ...categories.map((cat) => ({
+          value: cat,
+          label: categoryConfig[cat].label,
+        })),
+      ],
     },
     {
-      key: 'status',
-      label: 'Trạng thái',
+      key: "status",
+      label: "Trạng thái",
       options: [
-        { value: 'all', label: 'Tất cả' },
-        { value: 'published', label: 'Đã đăng' },
-        { value: 'draft', label: 'Nháp' },
-        { value: 'archived', label: 'Lưu trữ' }
-      ]
-    }
+        { value: "all", label: "Tất cả" },
+        { value: "published", label: "Đã đăng" },
+        { value: "draft", label: "Nháp" },
+        { value: "archived", label: "Lưu trữ" },
+      ],
+    },
   ];
 
-  const searchFields: (keyof News)[] = ['title', 'summary', 'author'];
+  const searchFields: (keyof News)[] = ["title", "summary", "author"];
 
   const stats = {
     total: newsArticles.length,
-    published: newsArticles.filter(n => n.status === 'published').length,
-    draft: newsArticles.filter(n => n.status === 'draft').length,
-    totalViews: newsArticles.reduce((sum, n) => sum + n.views, 0)
+    published: newsArticles.filter((n) => n.status === "published").length,
+    draft: newsArticles.filter((n) => n.status === "draft").length,
+    totalViews: newsArticles.reduce((sum, n) => sum + n.views, 0),
   };
 
   return (
@@ -280,7 +315,7 @@ export default function NewsManagement() {
         />
         <StatCard
           title="Lượt xem"
-          value={stats.totalViews.toLocaleString('vi-VN')}
+          value={stats.totalViews.toLocaleString("vi-VN")}
           subtitle="Tổng lượt xem"
           icon={Users}
           color="from-purple-500 to-pink-500"
@@ -298,7 +333,7 @@ export default function NewsManagement() {
           columns={columns}
           title="Danh sách tin tức"
           filters={filters}
-          searchKeys={['title', 'summary', 'author']}
+          searchKeys={["title", "summary", "author"]}
           searchPlaceholder="Tìm kiếm theo tiêu đề, nội dung, tác giả..."
           getItemKey={(news) => news.id}
           actions={
