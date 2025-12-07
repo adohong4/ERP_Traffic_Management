@@ -87,7 +87,7 @@ function getPermissionsForRole(role: UserRole, locationScope: LocationScope): Pe
         locationScope,
         role,
       };
-    
+
     case 'regional-admin':
       return {
         canViewDashboard: true,
@@ -109,7 +109,7 @@ function getPermissionsForRole(role: UserRole, locationScope: LocationScope): Pe
         locationScope,
         role,
       };
-    
+
     case 'viewer':
     default:
       return {
@@ -121,7 +121,7 @@ function getPermissionsForRole(role: UserRole, locationScope: LocationScope): Pe
         canViewViolations: true,
         canEditViolations: false,
         canViewReports: true,
-        canViewAuthorities: false,
+        canViewAuthorities: true,
         canEditAuthorities: false,
         canViewNews: true,
         canEditNews: false,
@@ -160,7 +160,7 @@ export function PermissionsProvider({ children }: { children: ReactNode }) {
 
     // Normalize address to lowercase for comparison
     const normalizedAddress = address.toLowerCase();
-    
+
     // Find user config by address (case-insensitive)
     const config = Object.values(USER_CONFIGS).find(
       (cfg) => cfg.address.toLowerCase() === normalizedAddress
@@ -223,10 +223,10 @@ export function PermissionsProvider({ children }: { children: ReactNode }) {
     };
 
     const allowedCities = cityMap[permissions.locationScope] || [];
-    
+
     return data.filter((item) => {
       if (!item.city) return false;
-      return allowedCities.some(city => 
+      return allowedCities.some(city =>
         item.city?.toLowerCase().includes(city.toLowerCase())
       );
     });

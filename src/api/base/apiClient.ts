@@ -7,7 +7,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
  */
 
 // API Base URL - thay đổi theo môi trường
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/v1/api';
 
 // API Version
 const API_VERSION = 'v1';
@@ -35,7 +35,7 @@ apiClient.interceptors.request.use(
   (config) => {
     // Lấy token từ localStorage
     const token = localStorage.getItem('auth_token');
-    
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

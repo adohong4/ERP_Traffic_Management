@@ -9,6 +9,7 @@ import {
 import { Button } from "./ui/button";
 import { Wallet, Shield, Lock, CheckCircle, ExternalLink } from "lucide-react";
 import { useWalletLogin } from "@/hooks/useWalletAuth";
+import { toast } from "sonner";
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -149,6 +150,46 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   </Button>
                 </motion.div>
               ))}
+
+              {/* === NÚT ĐĂNG NHẬP DEMO === */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="pt-6"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="bg-white px-4 text-gray-500">Hoặc</span>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => {
+                    const demoAddress = "0x335145400C12958600C0542F9180e03B917F7BbB";
+                    localStorage.setItem("wallet_address", demoAddress);
+                    localStorage.setItem("wallet_signature", "0x6d9b8516ce9c75ff9b795e202b38034d94c94e380939dbdd2f74d686f492ff6c4c9dd3f14179675f7a1bcee7c6c3c178dd125aa2d320e60f3afe3aceb85d57891c");
+                    localStorage.setItem("wallet_nonce", "999999");
+                    // localStorage.setItem("isDemo", "true"); // Đánh dấu là demo (tùy chọn)
+
+                    toast.success(`Chào mừng! Bạn đang dùng chế độ Demo`);
+                    setTimeout(onLogin, 600);
+                  }}
+                  variant="outline"
+                  className="w-full mt-6 border-2 border-dashed border-cyan-400 hover:border-cyan-500 hover:bg-cyan-50 text-cyan-700 font-semibold text-lg py-6 transition-all duration-300 group shadow-md hover:shadow-lg hover:shadow-cyan-500/20"
+                >
+                  <CheckCircle className="h-6 w-6 group-hover:scale-110 transition-transform" />
+                  <span className="ml-3">Đăng nhập (Demo)</span>
+                </Button>
+
+                <p className="text-center text-xs text-muted-foreground mt-4 leading-relaxed">
+                  Xem trước toàn bộ giao diện hệ thống quản lý GPLX • Không cần ví • Dữ liệu chỉ mang tính minh họa
+                </p>
+              </motion.div>
+              {/* === HẾT NÚT DEMO === */}
 
               <motion.div
                 initial={{ opacity: 0 }}
