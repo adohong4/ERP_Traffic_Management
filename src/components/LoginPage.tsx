@@ -186,7 +186,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                 </Button>
 
                 <p className="text-center text-xs text-muted-foreground mt-4 leading-relaxed">
-                  Xem trước toàn bộ giao diện hệ thống quản lý GPLX • Không cần ví • Dữ liệu chỉ mang tính minh họa
+                  Xem trước toàn bộ giao diện hệ thống quản lý GPLX • Không cần ví
                 </p>
               </motion.div>
               {/* === HẾT NÚT DEMO === */}
