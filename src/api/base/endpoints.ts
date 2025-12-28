@@ -22,13 +22,21 @@ export const API_ENDPOINTS = {
   // Driver License Management
   LICENSES: {
     BASE: '/licenses',
-    LIST: '/licenses',
+    LIST: '/licenses/getAll',
     GET: (id: string) => `/licenses/${id}`,
     CREATE: '/licenses',
     UPDATE: (id: string) => `/licenses/${id}`,
     DELETE: (id: string) => `/licenses/${id}`,
     SEARCH: '/licenses/search',
-    STATISTICS: '/licenses/statistics',
+    BY_WALLET: (address: string) => `/licenses/blockchain/${address}`,
+    STATS: {
+      STATUS: '/licenses/stats/status',
+      LICENSE_TYPE: '/licenses/stats/license-type',
+      LICENSE_TYPE_DETAIL: '/licenses/stats/license-type-detail',
+      CITY_DETAIL: '/licenses/stats/city-detail',
+    },
+    CONFIRM_BLOCKCHAIN: (id: string) => `/licenses/${id}/confirm-blockchain`,
+    ADD_WALLET: (id: string) => `/licenses/${id}/add-wallet`,
     EXPORT: '/licenses/export',
     BY_NUMBER: (licenseNumber: string) => `/licenses/number/${licenseNumber}`,
     HISTORY: (id: string) => `/licenses/${id}/history`,

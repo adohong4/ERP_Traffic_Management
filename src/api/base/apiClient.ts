@@ -1,16 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-/**
- * API Client Configuration
- * 
- * Base Axios instance với configuration chung cho toàn bộ API calls
- */
-
-// API Base URL - thay đổi theo môi trường
+// API Base URL
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/v1/api';
-
-// API Version
-const API_VERSION = 'v1';
 
 // Timeout configuration (30 seconds)
 const TIMEOUT = 30000;
@@ -19,7 +10,7 @@ const TIMEOUT = 30000;
  * Create Axios Instance
  */
 export const apiClient: AxiosInstance = axios.create({
-  baseURL: `${API_BASE_URL}/${API_VERSION}`,
+  baseURL: `${API_BASE_URL}`,
   timeout: TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
@@ -29,18 +20,18 @@ export const apiClient: AxiosInstance = axios.create({
 
 /**
  * Request Interceptor
- * Thêm authentication token vào mỗi request
+ * Thêm authentication token into each request
  */
 apiClient.interceptors.request.use(
   (config) => {
-    // Lấy token từ localStorage
+    // get token from localStorage
     const token = localStorage.getItem('auth_token');
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Log request khi đang development
+    // Log request when development
     if (import.meta.env.DEV) {
       console.log('🚀 API Request:', {
         method: config.method?.toUpperCase(),
@@ -60,11 +51,10 @@ apiClient.interceptors.request.use(
 
 /**
  * Response Interceptor
- * Xử lý response và error chung
  */
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Log response khi đang development
+    // Log response when development
     if (import.meta.env.DEV) {
       console.log('✅ API Response:', {
         url: response.config.url,
@@ -88,14 +78,14 @@ apiClient.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          // Unauthorized - xóa token và redirect to login
+          // Unauthorized
           localStorage.removeItem('auth_token');
           localStorage.removeItem('auth_user');
           window.location.href = '/login';
           break;
 
         case 403:
-          // Forbidden - không có quyền
+          // Forbidden 
           console.error('Forbidden: You do not have permission to access this resource');
           break;
 
@@ -183,14 +173,14 @@ export const setAuthToken = (token: string | null) => {
 };
 
 /**
- * Helper function để get current token
+ * Helper function to get current token
  */
 export const getAuthToken = (): string | null => {
   return localStorage.getItem('auth_token');
 };
 
 /**
- * Helper function để clear authentication
+ * Helper function to clear authentication
  */
 export const clearAuth = () => {
   localStorage.removeItem('auth_token');

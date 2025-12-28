@@ -7,7 +7,7 @@
 export * from './types';
 
 // License APIs
-export * from './licenses';
+// export * from './licenses';
 
 // Vehicle APIs
 export * from './vehicles';
@@ -43,7 +43,7 @@ export class ApiClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -60,36 +60,36 @@ export class ApiClient {
   }
 
   // License endpoints
-  licenses = {
-    list: (params?: any) => this.request('/licenses', { 
-      method: 'GET',
-      body: JSON.stringify(params)
-    }),
-    get: (id: string) => this.request(`/licenses/${id}`),
-    create: (data: any) => this.request('/licenses', { 
-      method: 'POST',
-      body: JSON.stringify(data)
-    }),
-    update: (id: string, data: any) => this.request(`/licenses/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(data)
-    }),
-    delete: (id: string) => this.request(`/licenses/${id}`, {
-      method: 'DELETE'
-    }),
-    renew: (id: string) => this.request(`/licenses/${id}/renew`, {
-      method: 'POST'
-    }),
-    suspend: (id: string, reason: string) => this.request(`/licenses/${id}/suspend`, {
-      method: 'POST',
-      body: JSON.stringify({ reason })
-    }),
-    revoke: (id: string, reason: string) => this.request(`/licenses/${id}/revoke`, {
-      method: 'POST',
-      body: JSON.stringify({ reason })
-    }),
-    stats: (city?: string) => this.request(`/licenses/stats${city ? `?city=${city}` : ''}`)
-  };
+  // licenses = {
+  //   list: (params?: any) => this.request('/licenses', {
+  //     method: 'GET',
+  //     body: JSON.stringify(params)
+  //   }),
+  //   get: (id: string) => this.request(`/licenses/${id}`),
+  //   create: (data: any) => this.request('/licenses', {
+  //     method: 'POST',
+  //     body: JSON.stringify(data)
+  //   }),
+  //   update: (id: string, data: any) => this.request(`/licenses/${id}`, {
+  //     method: 'PUT',
+  //     body: JSON.stringify(data)
+  //   }),
+  //   delete: (id: string) => this.request(`/licenses/${id}`, {
+  //     method: 'DELETE'
+  //   }),
+  //   renew: (id: string) => this.request(`/licenses/${id}/renew`, {
+  //     method: 'POST'
+  //   }),
+  //   suspend: (id: string, reason: string) => this.request(`/licenses/${id}/suspend`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ reason })
+  //   }),
+  //   revoke: (id: string, reason: string) => this.request(`/licenses/${id}/revoke`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ reason })
+  //   }),
+  //   stats: (city?: string) => this.request(`/licenses/stats${city ? `?city=${city}` : ''}`)
+  // };
 
   // Vehicle endpoints
   vehicles = {
@@ -114,7 +114,7 @@ export class ApiClient {
       body: JSON.stringify(data)
     }),
     stats: (city?: string) => this.request(`/vehicles/stats${city ? `?city=${city}` : ''}`),
-    inspectionsDue: (days?: number, city?: string) => 
+    inspectionsDue: (days?: number, city?: string) =>
       this.request(`/vehicles/inspections-due?days=${days || 30}${city ? `&city=${city}` : ''}`)
   };
 
@@ -237,10 +237,10 @@ export class ApiClient {
   // Dashboard endpoints
   dashboard = {
     stats: (city?: string) => this.request(`/dashboard/stats${city ? `?city=${city}` : ''}`),
-    recentActivities: (limit?: number, city?: string) => 
+    recentActivities: (limit?: number, city?: string) =>
       this.request(`/dashboard/recent-activities?limit=${limit || 10}${city ? `&city=${city}` : ''}`),
     alerts: (city?: string) => this.request(`/dashboard/alerts${city ? `?city=${city}` : ''}`),
-    trends: (days?: number, city?: string) => 
+    trends: (days?: number, city?: string) =>
       this.request(`/dashboard/trends?days=${days || 30}${city ? `&city=${city}` : ''}`)
   };
 

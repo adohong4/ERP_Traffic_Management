@@ -1,7 +1,7 @@
 // Main types export file
 
 // Export all type modules
-export * from './Common.types';
+// export * from './Common.types';
 export * from './DriverLicense.types';
 export * from './VehicleLicense.types';
 export * from './Violation.types';
@@ -26,10 +26,7 @@ export type {
 
 export type {
   DriverLicense,
-  LicenseClass,
   LicenseStatus,
-  LicenseApplication,
-  LicenseApplicationType,
 } from './DriverLicense.types';
 
 export type {

@@ -3,16 +3,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { config } from './lib/wagmiConfig';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Car, 
-  AlertCircle, 
-  BarChart3, 
-  Building2, 
-  Newspaper, 
-  Mail, 
-  Trash2, 
+import {
+  LayoutDashboard,
+  FileText,
+  Car,
+  AlertCircle,
+  BarChart3,
+  Building2,
+  Newspaper,
+  Mail,
+  Trash2,
   Settings as SettingsIcon
 } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
@@ -23,7 +23,7 @@ import LoginPage from './components/LoginPage';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
-import LicenseManagement from './components/LicenseManagement';
+import LicenseManagement from './components/Licenses/LicenseManagement';
 import VehicleManagement from './components/VehicleManagement';
 import ViolationsManagement from './components/ViolationsManagement';
 import ReportsAnalytics from './components/ReportsAnalytics';
@@ -76,15 +76,15 @@ function AppContent() {
   // Remove dark class on mount and handle responsive
   useEffect(() => {
     document.documentElement.classList.remove('dark');
-    
+
     // Check if user is logged in (from localStorage)
     const loggedIn = localStorage.getItem('erp_logged_in') === 'true';
     setIsLoggedIn(loggedIn);
-    
+
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -100,7 +100,7 @@ function AppContent() {
     localStorage.removeItem('wallet_address');
     localStorage.removeItem('wallet_signature');
     localStorage.removeItem('wallet_nonce');
-    
+
     // Disconnect wallet if connected (with error handling)
     if (isConnected) {
       try {
@@ -110,10 +110,10 @@ function AppContent() {
         console.log('Logout disconnect handled:', err);
       }
     }
-    
+
     // Set logged out state to trigger redirect to login
     setIsLoggedIn(false);
-    
+
     // Show success message
     toast.success('Đã đăng xuất thành công');
   };
@@ -139,7 +139,7 @@ function AppContent() {
                 onClick={() => setSidebarOpen(false)}
               />
             )}
-            
+
             <Sidebar
               menuItems={filteredMenuItems}
               activeMenu={activeMenu}
@@ -177,7 +177,7 @@ function AppContent() {
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
             <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-teal-50/50 rounded-full blur-3xl"></div>
           </div>
-          
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeMenu}
@@ -194,8 +194,8 @@ function AppContent() {
       </div>
 
       {/* Notifications Panel */}
-      <NotificationsPanel 
-        open={notificationsOpen} 
+      <NotificationsPanel
+        open={notificationsOpen}
         onOpenChange={setNotificationsOpen}
       />
     </div>

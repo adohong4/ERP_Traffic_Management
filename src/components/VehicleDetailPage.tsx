@@ -4,13 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
-import { 
-  ArrowLeft, 
-  Edit, 
-  Car, 
-  Calendar, 
-  MapPin, 
-  User, 
+import {
+  ArrowLeft,
+  Edit,
+  Car,
+  Calendar,
+  MapPin,
+  User,
   Phone,
   FileText,
   Download,
@@ -22,7 +22,7 @@ import {
 import { Vehicle } from '../lib/mockData';
 import { useBreadcrumb } from './BreadcrumbContext';
 import { toast } from 'sonner';
-import BlockchainConfirmModal from './BlockchainConfirmModal';
+import BlockchainConfirmModal from './Licenses/BlockchainConfirmModal';
 
 const statusConfig = {
   valid: { label: 'Còn hiệu lực', color: 'bg-green-500' },
@@ -87,7 +87,7 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
         </div>
         <div className="flex gap-2">
           {vehicle.onBlockchain ? (
-            <Button 
+            <Button
               variant="outline"
               className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border-cyan-400 hover:border-cyan-500 text-cyan-700"
               size="sm"
@@ -97,7 +97,7 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
               Đã lưu trữ vào Blockchain
             </Button>
           ) : (
-            <Button 
+            <Button
               variant="outline"
               className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-300 hover:border-purple-400 text-purple-700"
               size="sm"
@@ -138,81 +138,81 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <InfoRow 
-                icon={Car} 
-                label="Biển số xe" 
-                value={vehicle.plateNumber} 
-                highlight 
+              <InfoRow
+                icon={Car}
+                label="Biển số xe"
+                value={vehicle.plateNumber}
+                highlight
               />
               <Separator />
-              <InfoRow 
-                icon={User} 
-                label="Chủ sở hữu" 
-                value={vehicle.owner} 
+              <InfoRow
+                icon={User}
+                label="Chủ sở hữu"
+                value={vehicle.owner}
               />
               <Separator />
-              <InfoRow 
-                icon={Phone} 
-                label="Số điện thoại" 
-                value={vehicle.ownerPhone} 
+              <InfoRow
+                icon={Phone}
+                label="Số điện thoại"
+                value={vehicle.ownerPhone}
               />
               <Separator />
-              <InfoRow 
-                icon={Car} 
-                label="Loại xe" 
-                value={vehicle.vehicleType} 
+              <InfoRow
+                icon={Car}
+                label="Loại xe"
+                value={vehicle.vehicleType}
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Hãng xe" 
-                value={vehicle.brand} 
+              <InfoRow
+                icon={FileText}
+                label="Hãng xe"
+                value={vehicle.brand}
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Model" 
-                value={vehicle.model} 
+              <InfoRow
+                icon={FileText}
+                label="Model"
+                value={vehicle.model}
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Màu sắc" 
-                value={vehicle.color} 
+              <InfoRow
+                icon={FileText}
+                label="Màu sắc"
+                value={vehicle.color}
               />
               <Separator />
-              <InfoRow 
-                icon={MapPin} 
-                label="Thành phố" 
-                value={vehicle.city} 
+              <InfoRow
+                icon={MapPin}
+                label="Thành phố"
+                value={vehicle.city}
               />
               <Separator />
-              <InfoRow 
-                icon={Calendar} 
-                label="Ngày đăng ký" 
-                value={new Date(vehicle.registrationDate).toLocaleDateString('vi-VN')} 
+              <InfoRow
+                icon={Calendar}
+                label="Ngày đăng ký"
+                value={new Date(vehicle.registrationDate).toLocaleDateString('vi-VN')}
               />
               <Separator />
-              <InfoRow 
-                icon={Calendar} 
-                label="Lần đăng kiểm gần nhất" 
-                value={new Date(vehicle.lastInspection).toLocaleDateString('vi-VN')} 
+              <InfoRow
+                icon={Calendar}
+                label="Lần đăng kiểm gần nhất"
+                value={new Date(vehicle.lastInspection).toLocaleDateString('vi-VN')}
               />
               <Separator />
-              <InfoRow 
-                icon={Calendar} 
-                label="Đăng kiểm tiếp theo" 
-                value={new Date(vehicle.nextInspection).toLocaleDateString('vi-VN')} 
+              <InfoRow
+                icon={Calendar}
+                label="Đăng kiểm tiếp theo"
+                value={new Date(vehicle.nextInspection).toLocaleDateString('vi-VN')}
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Trạng thái" 
+              <InfoRow
+                icon={FileText}
+                label="Trạng thái"
                 value={
                   <Badge className={statusConfig[vehicle.status].color}>
                     {statusConfig[vehicle.status].label}
                   </Badge>
-                } 
+                }
               />
             </CardContent>
           </Card>
@@ -268,11 +268,11 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
                   <div>
                     <p className="font-medium">{statusConfig[vehicle.status].label}</p>
                     <p className="text-xs text-muted-foreground">
-                      {vehicle.status === 'valid' 
+                      {vehicle.status === 'valid'
                         ? `Đăng kiểm đến ${new Date(vehicle.nextInspection).toLocaleDateString('vi-VN')}`
                         : vehicle.status === 'expired'
-                        ? `Đã hết hạn từ ${new Date(vehicle.nextInspection).toLocaleDateString('vi-VN')}`
-                        : 'Đang xử lý đăng kiểm'}
+                          ? `Đã hết hạn từ ${new Date(vehicle.nextInspection).toLocaleDateString('vi-VN')}`
+                          : 'Đang xử lý đăng kiểm'}
                     </p>
                   </div>
                 </div>

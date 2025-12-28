@@ -1,33 +1,33 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { motion } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Save, X } from 'lucide-react';
-import { License } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
+import type { DriverLicense } from '@/types';
 
 interface LicenseAddEditProps {
-  license?: License;
+  license?: DriverLicense;
   onBack: () => void;
-  onSave: (data: any) => void;
+  onSave: (data: Partial<DriverLicense>) => void;
 }
 
 export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEditProps) {
   const { setBreadcrumbs, resetBreadcrumbs } = useBreadcrumb();
   const isEdit = !!license;
 
-  const [formData, setFormData] = useState({
-    licenseNumber: license?.licenseNumber || '',
-    holderName: license?.holderName || '',
-    idCard: license?.idCard || '',
-    licenseType: license?.licenseType || 'B2',
-    city: license?.city || 'Hà Nội',
-    issuePlace: license?.issuePlace || '',
-    issueDate: license?.issueDate || '',
-    expiryDate: license?.expiryDate || '',
+  const [formData, setFormData] = useState<Partial<DriverLicense>>({
+    license_no: license?.license_no || '',
+    full_name: license?.full_name || '',
+    identity_no: license?.identity_no || '',
+    license_type: license?.license_type || 'B2',
+    owner_city: license?.owner_city || 'Hà Nội',
+    issuing_authority: license?.issuing_authority || '',
+    issue_date: license?.issue_date || '',
+    expiry_date: license?.expiry_date || '',
     status: license?.status || 'active'
   });
 
@@ -35,11 +35,11 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
     setBreadcrumbs([
       { label: 'Trang chính', onClick: onBack, isHome: true },
       { label: 'Quản lý GPLX', onClick: onBack },
-      ...(isEdit 
+      ...(isEdit
         ? [
-            { label: license.licenseNumber, onClick: () => {} },
-            { label: 'Chỉnh sửa' }
-          ]
+          { label: license.license_no, onClick: () => { } },
+          { label: 'Chỉnh sửa' }
+        ]
         : [{ label: 'Thêm GPLX mới' }]
       )
     ]);
@@ -49,7 +49,7 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
     };
   }, [isEdit, license, onBack, setBreadcrumbs, resetBreadcrumbs]);
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: keyof DriverLicense, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -73,7 +73,7 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
           <div>
             <h2 className="text-3xl">{isEdit ? 'Chỉnh sửa GPLX' : 'Thêm GPLX mới'}</h2>
             <p className="text-muted-foreground mt-1">
-              {isEdit ? `Cập nhật thông tin GPLX ${license.licenseNumber}` : 'Cấp giấy phép lái xe mới'}
+              {isEdit ? `Cập nhật thông tin GPLX ${license.license_no}` : 'Cấp giấy phép lái xe mới'}
             </p>
           </div>
         </div>
@@ -95,22 +95,22 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
                 <CardContent className="space-y-4">
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="licenseNumber">Số GPLX *</Label>
+                      <Label htmlFor="license_no">Số GPLX *</Label>
                       <Input
-                        id="licenseNumber"
-                        value={formData.licenseNumber}
-                        onChange={(e) => handleChange('licenseNumber', e.target.value)}
+                        id="license_no"
+                        value={formData.license_no || ''}
+                        onChange={(e) => handleChange('license_no', e.target.value)}
                         placeholder="VD: B2-HN-123456"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="licenseType">Hạng GPLX *</Label>
-                      <Select 
-                        value={formData.licenseType} 
-                        onValueChange={(value) => handleChange('licenseType', value)}
+                      <Label htmlFor="license_type">Hạng GPLX *</Label>
+                      <Select
+                        value={formData.license_type || ''}
+                        onValueChange={(value: any) => handleChange('license_type', value)}
                       >
-                        <SelectTrigger id="licenseType">
+                        <SelectTrigger id="license_type">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -124,21 +124,21 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="holderName">Họ và tên *</Label>
+                      <Label htmlFor="full_name">Họ và tên *</Label>
                       <Input
-                        id="holderName"
-                        value={formData.holderName}
-                        onChange={(e) => handleChange('holderName', e.target.value)}
+                        id="full_name"
+                        value={formData.full_name || ''}
+                        onChange={(e) => handleChange('full_name', e.target.value)}
                         placeholder="Nguyễn Văn A"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="idCard">CCCD/CMND *</Label>
+                      <Label htmlFor="identity_no">CCCD/CMND *</Label>
                       <Input
-                        id="idCard"
-                        value={formData.idCard}
-                        onChange={(e) => handleChange('idCard', e.target.value)}
+                        id="identity_no"
+                        value={formData.identity_no || ''}
+                        onChange={(e) => handleChange('identity_no', e.target.value)}
                         placeholder="001012345678"
                         required
                       />
@@ -147,12 +147,12 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="city">Thành phố *</Label>
-                      <Select 
-                        value={formData.city} 
-                        onValueChange={(value) => handleChange('city', value)}
+                      <Label htmlFor="owner_city">Thành phố *</Label>
+                      <Select
+                        value={formData.owner_city || ''}
+                        onValueChange={(value: any) => handleChange('owner_city', value)}
                       >
-                        <SelectTrigger id="city">
+                        <SelectTrigger id="owner_city">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -163,11 +163,11 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="issuePlace">Nơi cấp *</Label>
+                      <Label htmlFor="issuing_authority">Nơi cấp *</Label>
                       <Input
-                        id="issuePlace"
-                        value={formData.issuePlace}
-                        onChange={(e) => handleChange('issuePlace', e.target.value)}
+                        id="issuing_authority"
+                        value={formData.issuing_authority || ''}
+                        onChange={(e) => handleChange('issuing_authority', e.target.value)}
                         placeholder="Phòng CSGT Hà Nội"
                         required
                       />
@@ -176,22 +176,22 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="issueDate">Ngày cấp *</Label>
+                      <Label htmlFor="issue_date">Ngày cấp *</Label>
                       <Input
-                        id="issueDate"
+                        id="issue_date"
                         type="date"
-                        value={formData.issueDate}
-                        onChange={(e) => handleChange('issueDate', e.target.value)}
+                        value={formData.issue_date || ''}
+                        onChange={(e) => handleChange('issue_date', e.target.value)}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="expiryDate">Ngày hết hạn *</Label>
+                      <Label htmlFor="expiry_date">Ngày hết hạn *</Label>
                       <Input
-                        id="expiryDate"
+                        id="expiry_date"
                         type="date"
-                        value={formData.expiryDate}
-                        onChange={(e) => handleChange('expiryDate', e.target.value)}
+                        value={formData.expiry_date || ''}
+                        onChange={(e) => handleChange('expiry_date', e.target.value)}
                         required
                       />
                     </div>
@@ -200,18 +200,19 @@ export default function LicenseAddEdit({ license, onBack, onSave }: LicenseAddEd
                   {isEdit && (
                     <div className="space-y-2">
                       <Label htmlFor="status">Trạng thái</Label>
-                      <Select 
-                        value={formData.status} 
-                        onValueChange={(value) => handleChange('status', value)}
+                      <Select
+                        value={formData.status || ''}
+                        onValueChange={(value: any) => handleChange('status', value)}
                       >
                         <SelectTrigger id="status">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="active">Đang hiệu lực</SelectItem>
+                          <SelectItem value="pending">Chờ duyệt</SelectItem>
+                          <SelectItem value="active">Hoạt động</SelectItem>
                           <SelectItem value="expired">Hết hạn</SelectItem>
-                          <SelectItem value="suspended">Tạm dừng</SelectItem>
-                          <SelectItem value="revoked">Thu hồi</SelectItem>
+                          <SelectItem value="pause">Tạm dừng</SelectItem>
+                          <SelectItem value="revoke">Thu hồi</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

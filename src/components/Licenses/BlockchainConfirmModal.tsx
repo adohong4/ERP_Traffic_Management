@@ -1,5 +1,7 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog';
-import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import { Database, Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -7,7 +9,7 @@ import { toast } from 'sonner';
 interface BlockchainConfirmModalProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => Promise<void>;
+  onConfirm: (txHash: string) => Promise<void>;
   title?: string;
   type?: 'license' | 'vehicle';
   data: {
@@ -26,19 +28,22 @@ export default function BlockchainConfirmModal({
   data,
 }: BlockchainConfirmModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [txHash, setTxHash] = useState('');
 
   const handleConfirm = async () => {
+    if (!txHash) {
+      toast.error('Vui lòng nhập Transaction Hash');
+      return;
+    }
+
     setIsProcessing(true);
     try {
-      // Simulate blockchain transaction
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      await onConfirm();
-      
+      await onConfirm(txHash);
+
       toast.success('Lưu trữ vào Blockchain thành công!', {
         description: `${type === 'license' ? 'GPLX' : 'Phương tiện'} đã được lưu trữ an toàn trên Blockchain`,
       });
-      
+
       onClose();
     } catch (error: any) {
       toast.error('Lỗi khi lưu trữ vào Blockchain', {
@@ -86,6 +91,18 @@ export default function BlockchainConfirmModal({
                 </p>
               )}
             </div>
+          </div>
+
+          {/* TxHash Input */}
+          <div className="space-y-2">
+            <Label htmlFor="txHash">Transaction Hash *</Label>
+            <Input
+              id="txHash"
+              value={txHash}
+              onChange={(e) => setTxHash(e.target.value)}
+              placeholder="Nhập transaction hash sau khi lưu blockchain"
+              required
+            />
           </div>
 
           {/* Warning */}
