@@ -8,7 +8,7 @@ import { FileText, Ban, RefreshCw, AlertTriangle, BarChart3, Eye, Edit, Trash2, 
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import LicenseDetailPage from './LicenseDetailPage';
 import LicenseAddEdit from './LicenseAddEdit';
-import ModernDataTable, { ColumnDef, FilterConfig } from '../ModernDataTable';
+import ModernDataTable, { ColumnDef, FilterConfig } from './ModernDataTable';
 import StatCard from '../StatCard';
 import licenseService from '@/services/licenseService';
 import type { DriverLicense, LicenseStatus } from '@/types';
@@ -24,11 +24,15 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'
 
 export default function LicenseManagement() {
   const [licenses, setLicenses] = useState<DriverLicense[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [selectedLicense, setSelectedLicense] = useState<DriverLicense | null>(null);
   const [viewMode, setViewMode] = useState<'list' | 'detail' | 'add' | 'edit'>('list');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const [statusStats, setStatusStats] = useState<{ distribution: { status: LicenseStatus; count: number }[]; total: number } | null>(null);
   const [typeStats, setTypeStats] = useState<{ distribution: { license_type: string; count: number }[]; total: number } | null>(null);
@@ -39,10 +43,12 @@ export default function LicenseManagement() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const licenseData = await licenseService.getAllLicenses(1, 30);
+        const licenseData = await licenseService.getAllLicenses(currentPage, itemsPerPage);
         setLicenses(licenseData.driver_licenses);
+        setTotalCount(licenseData.total_count);
+        setTotalPages(licenseData.total_pages);
 
-        // Fetch stats
+        // Fetch stats (independent of pagination)
         const [statusData, typeData, typeDetailData, cityData] = await Promise.all([
           licenseService.getStatusStats(),
           licenseService.getLicenseTypeStats(),
@@ -63,7 +69,7 @@ export default function LicenseManagement() {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage, itemsPerPage]);
 
   // Helper functions
   const handleViewDetail = (license: DriverLicense) => {
@@ -79,7 +85,11 @@ export default function LicenseManagement() {
   const handleDeleteLicense = async (id: string) => {
     try {
       await licenseService.deleteLicense(id);
-      setLicenses(prev => prev.filter(l => l.id !== id));
+      // Refresh current page
+      const licenseData = await licenseService.getAllLicenses(currentPage, itemsPerPage);
+      setLicenses(licenseData.driver_licenses);
+      setTotalCount(licenseData.total_count);
+      setTotalPages(licenseData.total_pages);
     } catch (err) {
       console.error('Lỗi khi xóa:', err);
     }
@@ -88,7 +98,11 @@ export default function LicenseManagement() {
   const handleAddLicense = async (data: Partial<DriverLicense>) => {
     try {
       const newLicense = await licenseService.createLicense(data);
-      setLicenses(prev => [...prev, newLicense]);
+      // Refresh current page
+      const licenseData = await licenseService.getAllLicenses(currentPage, itemsPerPage);
+      setLicenses(licenseData.driver_licenses);
+      setTotalCount(licenseData.total_count);
+      setTotalPages(licenseData.total_pages);
       setViewMode('list');
     } catch (err) {
       console.error('Lỗi khi thêm:', err);
@@ -98,7 +112,11 @@ export default function LicenseManagement() {
   const handleUpdateLicense = async (id: string, data: Partial<DriverLicense>) => {
     try {
       const updated = await licenseService.updateLicense(id, data);
-      setLicenses(prev => prev.map(l => l.id === id ? updated : l));
+      // Refresh current page
+      const licenseData = await licenseService.getAllLicenses(currentPage, itemsPerPage);
+      setLicenses(licenseData.driver_licenses);
+      setTotalCount(licenseData.total_count);
+      setTotalPages(licenseData.total_pages);
       setViewMode('detail');
     } catch (err) {
       console.error('Lỗi khi cập nhật:', err);
@@ -598,6 +616,12 @@ export default function LicenseManagement() {
           filters={filters}
           getItemKey={(license) => license.id}
           onExport={() => console.log('Exporting licenses...')}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={totalCount}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
         />
 
         {/* Action Legend */}

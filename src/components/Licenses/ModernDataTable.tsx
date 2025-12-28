@@ -1,33 +1,33 @@
 import { useState, useMemo, ReactNode } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "./ui/popover";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+} from "@/components/ui/popover";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Tooltip as TooltipUI,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "@/components/ui/tooltip";
 import {
   Search,
   Filter,
@@ -36,7 +36,7 @@ import {
   ChevronDown,
   ChevronsUpDown,
 } from "lucide-react";
-import PaginationBar from "./PaginationBar";
+import PaginationBar from "@/components/PaginationBar";
 
 export interface ColumnDef<T> {
   key: string;
@@ -64,6 +64,12 @@ interface ModernDataTableProps<T> {
   onExport?: () => void;
   actions?: ReactNode;
   getItemKey: (item: T) => string;
+  currentPage: number;
+  itemsPerPage: number;
+  totalItems: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  onItemsPerPageChange: (size: number) => void;
 }
 
 export default function ModernDataTable<
@@ -78,10 +84,14 @@ export default function ModernDataTable<
   onExport,
   actions,
   getItemKey,
+  currentPage,
+  itemsPerPage,
+  totalItems,
+  totalPages,
+  onPageChange,
+  onItemsPerPageChange,
 }: ModernDataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: "asc" | "desc";
@@ -94,6 +104,8 @@ export default function ModernDataTable<
       {},
     ),
   );
+
+  // Note: Filtering and sorting are client-side for now. If server-side needed, pass callbacks to parent.
 
   // Filter data
   const filteredData = useMemo(() => {
@@ -142,11 +154,8 @@ export default function ModernDataTable<
     });
   }, [filteredData, sortConfig]);
 
-  // Paginate data
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
+  // Paginated data is already handled server-side, so use sortedData directly (which is current page's data)
+  const paginatedData = sortedData;
 
   // Calculate if we should auto-fit columns
   const shouldAutoFit = useMemo(() => {
@@ -221,7 +230,7 @@ export default function ModernDataTable<
           <div>
             <h2 className="text-xl text-slate-900">{title}</h2>
             <p className="text-sm text-slate-500 mt-1">
-              {filteredData.length} kết quả
+              {totalItems} kết quả
             </p>
           </div>
 
@@ -233,9 +242,9 @@ export default function ModernDataTable<
                 placeholder={searchPlaceholder}
                 className="pl-9 bg-white border-slate-200 focus:border-cyan-400 focus:ring-cyan-400/20 transition-all"
                 value={searchTerm}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setSearchTerm(e.target.value);
-                  setCurrentPage(1);
+                  // Note: Search is client-side for now. If server-side, call parent callback
                 }}
               />
             </div>
@@ -284,7 +293,6 @@ export default function ModernDataTable<
                               ...prev,
                               [filter.key]: value,
                             }));
-                            setCurrentPage(1);
                           }}
                         >
                           <SelectTrigger className="bg-white border-slate-200">
@@ -417,7 +425,6 @@ export default function ModernDataTable<
                         >
                           {column.render(
                             item,
-                            (currentPage - 1) * itemsPerPage +
                             index,
                           )}
                         </div>
@@ -435,10 +442,10 @@ export default function ModernDataTable<
             <div className="px-6 py-4 border-t border-slate-100 bg-white">
               <PaginationBar
                 currentPage={currentPage}
-                totalItems={filteredData.length}
+                totalItems={totalItems}
                 itemsPerPage={itemsPerPage}
-                onPageChange={setCurrentPage}
-                onItemsPerPageChange={setItemsPerPage}
+                onPageChange={onPageChange}
+                onItemsPerPageChange={onItemsPerPageChange}
               />
             </div>
           )}
