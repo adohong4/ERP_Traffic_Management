@@ -22,7 +22,7 @@ import {
 import { Vehicle } from '../lib/mockData';
 import { useBreadcrumb } from './BreadcrumbContext';
 import { toast } from 'sonner';
-import BlockchainConfirmModal from './Licenses/BlockchainConfirmModal';
+import BlockchainConfirmModal from './LicensesUI/BlockchainConfirmModal';
 
 const statusConfig = {
   valid: { label: 'Còn hiệu lực', color: 'bg-green-500' },

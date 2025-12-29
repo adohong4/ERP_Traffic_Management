@@ -32,7 +32,7 @@ export default function LicenseManagement() {
   const [selectedLicense, setSelectedLicense] = useState<DriverLicense | null>(null);
   const [viewMode, setViewMode] = useState<'list' | 'detail' | 'add' | 'edit'>('list');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const [statusStats, setStatusStats] = useState<{ distribution: { status: LicenseStatus; count: number }[]; total: number } | null>(null);
   const [typeStats, setTypeStats] = useState<{ distribution: { license_type: string; count: number }[]; total: number } | null>(null);

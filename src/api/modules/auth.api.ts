@@ -1,51 +1,50 @@
+import { ConnectWalletCredentials, LoginCredentials, AuthResponse, RegisterData } from '@/types/auth.types';
 import { api, setAuthToken } from '../base/apiClient';
 import { API_ENDPOINTS } from '../base/endpoints';
 import type { User, ApiResponse } from '@/types';
+import { useAccount, useDisconnect } from 'wagmi';
+import { toast } from 'sonner';
 
-/**
- * Auth API Module
- * 
- * Handles all authentication-related API calls
- */
-
-export interface LoginCredentials {
-  username: string;
-  password: string;
-  rememberMe?: boolean;
-}
-
-export interface LoginResponse {
-  user: User;
-  token: string;
-  refreshToken?: string;
-  expiresIn?: number;
-}
-
-export interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-  fullName: string;
-  phone?: string;
-}
+const { address, isConnected } = useAccount();
+const { disconnect } = useDisconnect();
 
 /**
  * Login user
  */
-export const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
-  const response = await api.post<ApiResponse<LoginResponse>>(
+export const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
+  const response = await api.post<ApiResponse<AuthResponse>>(
     API_ENDPOINTS.AUTH.LOGIN,
     credentials
   );
-  
+
   const loginData = response.data.data!;
-  
+
   // Set auth token
   setAuthToken(loginData.token);
-  
+
   // Save user to localStorage
   localStorage.setItem('auth_user', JSON.stringify(loginData.user));
-  
+
+  return loginData;
+};
+
+/**
+ * Connect Wallet
+ */
+export const connectWallet = async (credentials: ConnectWalletCredentials): Promise<AuthResponse> => {
+  const response = await api.post<AuthResponse>(
+    API_ENDPOINTS.AUTH.CONNECTWALLET,
+    credentials
+  );
+
+  const loginData = response.data;
+
+  // Set auth token
+  setAuthToken(loginData.token);
+
+  // Save user to localStorage
+  localStorage.setItem('auth_user', JSON.stringify(loginData.user));
+
   return loginData;
 };
 
@@ -53,54 +52,41 @@ export const login = async (credentials: LoginCredentials): Promise<LoginRespons
  * Logout user
  */
 export const logout = async (): Promise<void> => {
-  try {
-    await api.post(API_ENDPOINTS.AUTH.LOGOUT);
-  } catch (error) {
-    console.error('Logout error:', error);
-  } finally {
-    // Clear local auth data regardless of API call result
-    setAuthToken(null);
-    localStorage.removeItem('auth_user');
-  }
-};
+  localStorage.removeItem('auth_user');
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('erp_logged_in');
+  localStorage.removeItem('wallet_address');
+  localStorage.removeItem('wallet_signature');
+  localStorage.removeItem('wallet_nonce');
 
-/**
- * Register new user
- */
-export const register = async (data: RegisterData): Promise<LoginResponse> => {
-  const response = await api.post<ApiResponse<LoginResponse>>(
-    API_ENDPOINTS.AUTH.REGISTER,
-    data
-  );
-  
-  const registerData = response.data.data!;
-  
-  // Set auth token
-  setAuthToken(registerData.token);
-  
-  // Save user to localStorage
-  localStorage.setItem('auth_user', JSON.stringify(registerData.user));
-  
-  return registerData;
+  if (isConnected) {
+    try {
+      await disconnect();
+    } catch (err) {
+      console.log('Logout disconnect handled:', err);
+    }
+  }
+
+  toast.success('Đã đăng xuất thành công');
 };
 
 /**
  * Refresh authentication token
  */
-export const refreshToken = async (refreshToken: string): Promise<LoginResponse> => {
-  const response = await api.post<ApiResponse<LoginResponse>>(
+export const refreshToken = async (refreshToken: string): Promise<AuthResponse> => {
+  const response = await api.post<ApiResponse<AuthResponse>>(
     API_ENDPOINTS.AUTH.REFRESH_TOKEN,
     { refreshToken }
   );
-  
+
   const tokenData = response.data.data!;
-  
+
   // Update auth token
   setAuthToken(tokenData.token);
-  
+
   // Update user in localStorage
   localStorage.setItem('auth_user', JSON.stringify(tokenData.user));
-  
+
   return tokenData;
 };
 
@@ -120,63 +106,23 @@ export const updateProfile = async (data: Partial<User>): Promise<User> => {
     API_ENDPOINTS.AUTH.UPDATE_PROFILE,
     data
   );
-  
+
   const updatedUser = response.data.data!;
-  
+
   // Update user in localStorage
   localStorage.setItem('auth_user', JSON.stringify(updatedUser));
-  
+
   return updatedUser;
-};
-
-/**
- * Change password
- */
-export const changePassword = async (data: {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}): Promise<void> => {
-  await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data);
-};
-
-/**
- * Request password reset
- */
-export const forgotPassword = async (email: string): Promise<void> => {
-  await api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email });
-};
-
-/**
- * Reset password with token
- */
-export const resetPassword = async (data: {
-  token: string;
-  password: string;
-  confirmPassword: string;
-}): Promise<void> => {
-  await api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data);
-};
-
-/**
- * Verify email with token
- */
-export const verifyEmail = async (token: string): Promise<void> => {
-  await api.post(API_ENDPOINTS.AUTH.VERIFY_EMAIL, { token });
 };
 
 // Export all functions
 export const authApi = {
   login,
   logout,
-  register,
+  connectWallet,
   refreshToken,
   getCurrentUser,
   updateProfile,
-  changePassword,
-  forgotPassword,
-  resetPassword,
-  verifyEmail,
 };
 
 export default authApi;

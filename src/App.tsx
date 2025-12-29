@@ -23,7 +23,7 @@ import LoginPage from './components/LoginPage';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
-import LicenseManagement from './components/Licenses/LicenseManagement';
+import LicenseManagement from './components/LicensesUI/LicenseManagement';
 import VehicleManagement from './components/VehicleManagement';
 import ViolationsManagement from './components/ViolationsManagement';
 import ReportsAnalytics from './components/ReportsAnalytics';
@@ -34,6 +34,7 @@ import TrashBin from './components/TrashBin';
 import Settings from './components/Settings';
 import NotificationsPanel from './components/NotificationsPanel';
 import { notifications } from './lib/mockData';
+import authService from './services/authService';
 
 type MenuItem = {
   id: string;
@@ -95,27 +96,8 @@ function AppContent() {
   };
 
   const handleLogout = async () => {
-    // Clear all auth data
-    localStorage.removeItem('erp_logged_in');
-    localStorage.removeItem('wallet_address');
-    localStorage.removeItem('wallet_signature');
-    localStorage.removeItem('wallet_nonce');
-
-    // Disconnect wallet if connected (with error handling)
-    if (isConnected) {
-      try {
-        await disconnect();
-      } catch (err) {
-        // Silently handle disconnect errors (e.g., connector.getChainId not found)
-        console.log('Logout disconnect handled:', err);
-      }
-    }
-
-    // Set logged out state to trigger redirect to login
+    await authService.logout()
     setIsLoggedIn(false);
-
-    // Show success message
-    toast.success('Đã đăng xuất thành công');
   };
 
   // Show login page if not logged in
