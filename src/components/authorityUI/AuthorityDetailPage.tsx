@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Separator } from './ui/separator';
-import { 
-  ArrowLeft, 
-  Edit, 
-  Building2, 
-  Calendar, 
-  MapPin, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import {
+  ArrowLeft,
+  Edit,
+  Building2,
+  Calendar,
+  MapPin,
   User,
   Phone,
   Mail,
@@ -18,9 +18,9 @@ import {
   Download,
   Printer
 } from 'lucide-react';
-import { TrafficAuthority } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
-import WalletAddressManager from './WalletAddressManager';
+import { TrafficAuthority } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
+import WalletAddressManager from '@/components/WalletAddressManager';
 
 const statusConfig = {
   active: { label: 'Hoạt động', color: 'bg-green-500' },
@@ -119,75 +119,75 @@ export default function AuthorityDetailPage({ authority, onBack, onEdit }: Autho
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <InfoRow 
-                icon={Building2} 
-                label="Tên cơ quan" 
-                value={authority.name} 
-                highlight 
+              <InfoRow
+                icon={Building2}
+                label="Tên cơ quan"
+                value={authority.name}
+                highlight
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Mã cơ quan" 
-                value={<code className="text-sm bg-muted px-2 py-1 rounded">{authority.code}</code>} 
+              <InfoRow
+                icon={FileText}
+                label="Mã cơ quan"
+                value={<code className="text-sm bg-muted px-2 py-1 rounded">{authority.code}</code>}
               />
               <Separator />
-              <InfoRow 
-                icon={Building2} 
-                label="Loại hình" 
-                value={<Badge variant="outline">{authorityTypeLabels[authority.type]}</Badge>} 
+              <InfoRow
+                icon={Building2}
+                label="Loại hình"
+                value={<Badge variant="outline">{authorityTypeLabels[authority.type]}</Badge>}
               />
               <Separator />
-              <InfoRow 
-                icon={MapPin} 
-                label="Địa chỉ" 
-                value={authority.address} 
+              <InfoRow
+                icon={MapPin}
+                label="Địa chỉ"
+                value={authority.address}
               />
               <Separator />
-              <InfoRow 
-                icon={MapPin} 
-                label="Thành phố" 
-                value={authority.city} 
+              <InfoRow
+                icon={MapPin}
+                label="Thành phố"
+                value={authority.city}
               />
               <Separator />
-              <InfoRow 
-                icon={User} 
-                label="Giám đốc/Trưởng phòng" 
-                value={authority.director} 
+              <InfoRow
+                icon={User}
+                label="Giám đốc/Trưởng phòng"
+                value={authority.director}
               />
               <Separator />
-              <InfoRow 
-                icon={Users} 
-                label="Số nhân viên" 
-                value={<Badge className="bg-purple-100 text-purple-700">{authority.employees}</Badge>} 
+              <InfoRow
+                icon={Users}
+                label="Số nhân viên"
+                value={<Badge className="bg-purple-100 text-purple-700">{authority.employees}</Badge>}
               />
               <Separator />
-              <InfoRow 
-                icon={Phone} 
-                label="Số điện thoại" 
-                value={authority.phone} 
+              <InfoRow
+                icon={Phone}
+                label="Số điện thoại"
+                value={authority.phone}
               />
               <Separator />
-              <InfoRow 
-                icon={Mail} 
-                label="Email" 
-                value={authority.email} 
+              <InfoRow
+                icon={Mail}
+                label="Email"
+                value={authority.email}
               />
               <Separator />
-              <InfoRow 
-                icon={Calendar} 
-                label="Ngày thành lập" 
-                value={new Date(authority.establishedDate).toLocaleDateString('vi-VN')} 
+              <InfoRow
+                icon={Calendar}
+                label="Ngày thành lập"
+                value={new Date(authority.establishedDate).toLocaleDateString('vi-VN')}
               />
               <Separator />
-              <InfoRow 
-                icon={FileText} 
-                label="Trạng thái" 
+              <InfoRow
+                icon={FileText}
+                label="Trạng thái"
                 value={
                   <Badge className={statusConfig[authority.status].color}>
                     {statusConfig[authority.status].label}
                   </Badge>
-                } 
+                }
               />
             </CardContent>
           </Card>
@@ -245,7 +245,7 @@ export default function AuthorityDetailPage({ authority, onBack, onEdit }: Autho
                   <div>
                     <p className="font-medium">{statusConfig[authority.status].label}</p>
                     <p className="text-xs text-muted-foreground">
-                      {authority.status === 'active' 
+                      {authority.status === 'active'
                         ? 'Cơ quan đang hoạt động bình thường'
                         : 'Cơ quan tạm ngưng hoạt động'}
                     </p>
@@ -288,7 +288,7 @@ export default function AuthorityDetailPage({ authority, onBack, onEdit }: Autho
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <WalletAddressManager 
+        <WalletAddressManager
           walletAddresses={authority.walletAddresses}
           authorityName={authority.name}
           onChange={(addresses) => {

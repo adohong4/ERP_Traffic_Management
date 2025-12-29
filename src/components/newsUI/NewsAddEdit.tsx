@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { 
-  ArrowLeft, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  ArrowLeft,
   Save,
   X,
   Upload,
   Plus,
   Trash2
 } from 'lucide-react';
-import { News } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { News } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
 import { toast } from 'sonner';
 import {
   Select,
@@ -22,8 +22,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
-import { Badge } from './ui/badge';
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 
 interface NewsAddEditProps {
   news: News | null;
@@ -129,15 +129,15 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={onBack}
           className="mb-4 hover:bg-blue-50"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Quay lại
         </Button>
-        
+
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-3xl mb-2">
@@ -261,7 +261,7 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
-              
+
               {formData.tags && formData.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {formData.tags.map((tag, index) => (
@@ -299,7 +299,7 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
                 </Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => handleChange('category', value)}
+                  onValueChange={(value: any) => handleChange('category', value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Chọn danh mục" />
@@ -320,7 +320,7 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
                 </Label>
                 <Select
                   value={formData.status}
-                  onValueChange={(value) => handleChange('status', value)}
+                  onValueChange={(value: any) => handleChange('status', value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Chọn trạng thái" />
@@ -357,9 +357,9 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
             <CardContent className="space-y-4">
               {formData.thumbnail && (
                 <div className="relative rounded-lg overflow-hidden">
-                  <img 
-                    src={formData.thumbnail} 
-                    alt="Thumbnail" 
+                  <img
+                    src={formData.thumbnail}
+                    alt="Thumbnail"
                     className="w-full h-48 object-cover"
                   />
                   <Button
@@ -372,7 +372,7 @@ export default function NewsAddEdit({ news, onBack, mode }: NewsAddEditProps) {
                   </Button>
                 </div>
               )}
-              
+
               <div className="space-y-2">
                 <Label htmlFor="thumbnail">URL ảnh đại diện</Label>
                 <Input

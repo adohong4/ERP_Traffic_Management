@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Separator } from './ui/separator';
-import { 
-  ArrowLeft, 
-  Edit, 
-  Calendar, 
-  User, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import {
+  ArrowLeft,
+  Edit,
+  Calendar,
+  User,
   Eye,
   Tag,
   Share2,
@@ -17,8 +17,8 @@ import {
   TrendingUp,
   Clock
 } from 'lucide-react';
-import { News } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { News } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
 import { toast } from 'sonner';
 
 const categoryConfig = {
@@ -105,8 +105,8 @@ export default function NewsDetailPage({ news, onBack, onEdit }: NewsDetailPageP
         >
           {/* Featured Image */}
           <Card className="overflow-hidden">
-            <img 
-              src={news.thumbnail} 
+            <img
+              src={news.thumbnail}
               alt={news.title}
               className="w-full h-[400px] object-cover"
             />
@@ -142,10 +142,10 @@ export default function NewsDetailPage({ news, onBack, onEdit }: NewsDetailPageP
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    <span>{new Date(news.publishDate).toLocaleDateString('vi-VN', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    <span>{new Date(news.publishDate).toLocaleDateString('vi-VN', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -156,7 +156,7 @@ export default function NewsDetailPage({ news, onBack, onEdit }: NewsDetailPageP
               </div>
             </CardHeader>
             <CardContent>
-              <div 
+              <div
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: news.content }}
               />

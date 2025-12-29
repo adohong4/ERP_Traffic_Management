@@ -2,11 +2,7 @@ import { ConnectWalletCredentials, LoginCredentials, AuthResponse, RegisterData 
 import { api, setAuthToken } from '../base/apiClient';
 import { API_ENDPOINTS } from '../base/endpoints';
 import type { User, ApiResponse } from '@/types';
-import { useAccount, useDisconnect } from 'wagmi';
 import { toast } from 'sonner';
-
-const { address, isConnected } = useAccount();
-const { disconnect } = useDisconnect();
 
 /**
  * Login user
@@ -58,14 +54,6 @@ export const logout = async (): Promise<void> => {
   localStorage.removeItem('wallet_address');
   localStorage.removeItem('wallet_signature');
   localStorage.removeItem('wallet_nonce');
-
-  if (isConnected) {
-    try {
-      await disconnect();
-    } catch (err) {
-      console.log('Logout disconnect handled:', err);
-    }
-  }
 
   toast.success('Đã đăng xuất thành công');
 };

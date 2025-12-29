@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Separator } from './ui/separator';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Calendar, MapPin, User, FileText, CreditCard, AlertCircle, CheckCircle, Clock, Download, Image as ImageIcon } from 'lucide-react';
-import { Violation } from '../lib/mockData';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Violation } from '@/lib/mockData';
+import { ImageWithFallback } from '@/components/image/ImageWithFallback';
 import { toast } from 'sonner';
 
 interface ViolationDetailPageProps {
@@ -45,15 +45,15 @@ export default function ViolationDetailPage({ violation, onBack }: ViolationDeta
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={onBack}
           className="mb-4 hover:bg-blue-50"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Quay lại
         </Button>
-        
+
         <div className="flex items-start justify-between">
           <div>
             {/* Title removed - already in breadcrumb */}
@@ -84,7 +84,7 @@ export default function ViolationDetailPage({ violation, onBack }: ViolationDeta
                   <p className="text-sm text-muted-foreground">Loại vi phạm</p>
                   <p className="font-medium">{violation.violationType}</p>
                 </div>
-                
+
                 <div className="space-y-1">
                   <p className="text-sm text-muted-foreground">Số điểm trừ</p>
                   <p className="font-medium text-red-600">{violation.points} điểm</p>
@@ -238,7 +238,7 @@ export default function ViolationDetailPage({ violation, onBack }: ViolationDeta
             </CardHeader>
             <CardContent className="space-y-3">
               {(violation.status === 'pending' || violation.status === 'overdue') && (
-                <Button 
+                <Button
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg shadow-green-500/30"
                   onClick={handlePayment}
                 >
@@ -248,8 +248,8 @@ export default function ViolationDetailPage({ violation, onBack }: ViolationDeta
               )}
 
               {violation.status === 'overdue' && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full text-orange-600 border-orange-300 hover:bg-orange-50"
                   onClick={handleSendReminder}
                 >
@@ -259,8 +259,8 @@ export default function ViolationDetailPage({ violation, onBack }: ViolationDeta
               )}
 
               {violation.status === 'paid' && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full"
                   onClick={handleDownloadReceipt}
                 >

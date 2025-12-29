@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Textarea } from './ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Save, X } from 'lucide-react';
-import { TrafficAuthority } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { TrafficAuthority } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
 
 interface AuthorityAddEditProps {
   authority?: TrafficAuthority;
@@ -38,11 +38,11 @@ export default function AuthorityAddEdit({ authority, onBack, onSave }: Authorit
     setBreadcrumbs([
       { label: 'Trang chính', onClick: onBack, isHome: true },
       { label: 'Cơ quan giao thông', onClick: onBack },
-      ...(isEdit 
+      ...(isEdit
         ? [
-            { label: authority.name, onClick: () => {} },
-            { label: 'Chỉnh sửa' }
-          ]
+          { label: authority.name, onClick: () => { } },
+          { label: 'Chỉnh sửa' }
+        ]
         : [{ label: 'Thêm cơ quan mới' }]
       )
     ]);
@@ -132,9 +132,9 @@ export default function AuthorityAddEdit({ authority, onBack, onSave }: Authorit
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="type">Loại cơ quan *</Label>
-                      <Select 
-                        value={formData.type} 
-                        onValueChange={(value) => handleChange('type', value)}
+                      <Select
+                        value={formData.type}
+                        onValueChange={(value: any) => handleChange('type', value)}
                       >
                         <SelectTrigger id="type">
                           <SelectValue />
@@ -148,9 +148,9 @@ export default function AuthorityAddEdit({ authority, onBack, onSave }: Authorit
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="city">Thành phố *</Label>
-                      <Select 
-                        value={formData.city} 
-                        onValueChange={(value) => handleChange('city', value)}
+                      <Select
+                        value={formData.city}
+                        onValueChange={(value: any) => handleChange('city', value)}
                       >
                         <SelectTrigger id="city">
                           <SelectValue />
@@ -240,9 +240,9 @@ export default function AuthorityAddEdit({ authority, onBack, onSave }: Authorit
                     {isEdit && (
                       <div className="space-y-2">
                         <Label htmlFor="status">Trạng thái</Label>
-                        <Select 
-                          value={formData.status} 
-                          onValueChange={(value) => handleChange('status', value)}
+                        <Select
+                          value={formData.status}
+                          onValueChange={(value: any) => handleChange('status', value)}
                         >
                           <SelectTrigger id="status">
                             <SelectValue />

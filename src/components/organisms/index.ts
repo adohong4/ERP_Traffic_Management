@@ -1,9 +1,9 @@
 // Export all organism components (complex components made of molecules and atoms)
 export { default as Dashboard } from '../Dashboard';
 export { default as LicenseManagement } from '../LicensesUI/LicenseManagement';
-export { default as VehicleManagement } from '../VehicleManagement';
-export { default as ViolationsManagement } from '../ViolationsManagement';
-export { default as NewsManagement } from '../NewsManagement';
+export { default as VehicleManagement } from '../vehicleUI/VehicleManagement';
+export { default as ViolationsManagement } from '../violationUI/ViolationsManagement';
+export { default as NewsManagement } from '../newsUI/NewsManagement';
 export { default as NotificationsManagement } from '../NotificationsManagement';
 export { default as TrafficAuthoritiesManagement } from '../TrafficAuthoritiesManagement';
 export { default as ReportsAnalytics } from '../ReportsAnalytics';

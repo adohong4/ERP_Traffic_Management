@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Tooltip as TooltipUI, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tooltip as TooltipUI, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Car, Calendar, AlertCircle, CheckCircle, BarChart3, Eye, Edit, Trash2, Plus, TrendingDown, TrendingUp, Database, Shield } from 'lucide-react';
-import { vehicles, type Vehicle } from '../lib/mockData';
+import { vehicles, type Vehicle } from '@/lib/mockData';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import VehicleDetailPage from './VehicleDetailPage';
 import VehicleAddEdit from './VehicleAddEdit';
-import ModernDataTable, { ColumnDef, FilterConfig } from './ModernDataTable';
-import StatCard from './StatCard';
+import ModernDataTable, { ColumnDef, FilterConfig } from '../ModernDataTable';
+import StatCard from '../StatCard';
 import { toast } from 'sonner';
 
 const statusConfig = {
@@ -60,8 +60,8 @@ export default function VehicleManagement() {
   // View modes
   if (viewMode === 'detail' && selectedVehicle) {
     return (
-      <VehicleDetailPage 
-        vehicle={selectedVehicle} 
+      <VehicleDetailPage
+        vehicle={selectedVehicle}
         onBack={() => {
           setViewMode('list');
           setSelectedVehicle(null);
@@ -244,8 +244,8 @@ export default function VehicleManagement() {
           <TooltipProvider>
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => {
@@ -263,8 +263,8 @@ export default function VehicleManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-blue-50 hover:text-blue-600"
                   onClick={() => {
@@ -282,8 +282,8 @@ export default function VehicleManagement() {
 
             <TooltipUI>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 hover:bg-red-50 hover:text-red-600"
                   onClick={() => toast.success('Đã xóa phương tiện thành công!')}
@@ -504,7 +504,7 @@ export default function VehicleManagement() {
           getItemKey={(vehicle) => vehicle.id}
           onExport={() => console.log('Exporting vehicles...')}
         />
-        
+
         {/* Action Legend */}
         <motion.div
           initial={{ opacity: 0 }}

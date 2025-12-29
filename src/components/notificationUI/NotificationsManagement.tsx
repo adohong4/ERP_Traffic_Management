@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip as TooltipUI,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "@/components/ui/tooltip";
 import {
   Plus,
   Eye,
@@ -20,7 +20,7 @@ import {
   Info,
   XCircle,
 } from "lucide-react";
-import ModernDataTable, { ColumnDef, FilterConfig } from "./ModernDataTable";
+import ModernDataTable, { ColumnDef, FilterConfig } from "@/components/ModernDataTable";
 import {
   Dialog,
   DialogContent,
@@ -28,18 +28,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface NotificationRecord {
   id: string;
@@ -47,11 +47,11 @@ interface NotificationRecord {
   message: string;
   type: "info" | "warning" | "success" | "error";
   targetAudience:
-    | "all"
-    | "license_holders"
-    | "vehicle_owners"
-    | "violators"
-    | "students";
+  | "all"
+  | "license_holders"
+  | "vehicle_owners"
+  | "violators"
+  | "students";
   status: "draft" | "sent" | "scheduled";
   createdDate: string;
   sentDate?: string;

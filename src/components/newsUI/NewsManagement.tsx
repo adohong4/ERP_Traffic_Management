@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import {
   Eye,
   Edit,
@@ -19,14 +19,14 @@ import {
   Users,
   Newspaper,
 } from "lucide-react";
-import { newsArticles, News } from "../lib/mockData";
-import ModernDataTable, { ColumnDef, FilterConfig } from "./ModernDataTable";
+import { newsArticles, News } from "@/lib/mockData";
+import ModernDataTable, { ColumnDef, FilterConfig } from "@/components/ModernDataTable";
 import {
   Tooltip as TooltipUI,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import NewsDetailPage from "./NewsDetailPage";
 import NewsAddEdit from "./NewsAddEdit";

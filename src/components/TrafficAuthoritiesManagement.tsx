@@ -24,8 +24,8 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { trafficAuthorities, type TrafficAuthority } from "../lib/mockData";
-import AuthorityDetailPage from "./AuthorityDetailPage";
-import AuthorityAddEdit from "./AuthorityAddEdit";
+import AuthorityDetailPage from "@/components/authorityUI/AuthorityDetailPage";
+import AuthorityAddEdit from "@/components/authorityUI/AuthorityAddEdit";
 import ModernDataTable, { ColumnDef, FilterConfig } from "./ModernDataTable";
 import StatCard from "./StatCard";
 import { toast } from "sonner";

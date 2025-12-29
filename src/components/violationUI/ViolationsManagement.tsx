@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Tooltip as TooltipUI, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tooltip as TooltipUI, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlertTriangle, DollarSign, Clock, CheckCircle, BarChart3, Eye, Edit, Trash2, TrendingDown, TrendingUp, Plus } from 'lucide-react';
-import { violations, type Violation } from '../lib/mockData';
+import { violations, type Violation } from '@/lib/mockData';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
-import ModernDataTable, { ColumnDef, FilterConfig } from './ModernDataTable';
+import ModernDataTable, { ColumnDef, FilterConfig } from '@/components/ModernDataTable';
 import ViolationDetailPage from './ViolationDetailPage';
 import ViolationAddEdit from './ViolationAddEdit';
-import StatCard from './StatCard';
+import StatCard from '@/components/StatCard';
 import { toast } from 'sonner';
 
 const statusConfig = {

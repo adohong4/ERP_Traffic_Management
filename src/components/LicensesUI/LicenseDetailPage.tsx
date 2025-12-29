@@ -23,7 +23,7 @@ import {
 import { useBreadcrumb } from '../BreadcrumbContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { toast } from 'sonner';
-import BlockchainConfirmModal from './BlockchainConfirmModal';
+import BlockchainConfirmModal from '@/components/BlockchainConfirmModal';
 import licenseService from '@/services/licenseService';
 import type { DriverLicense } from '@/types';
 

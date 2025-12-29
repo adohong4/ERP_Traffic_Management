@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Separator } from './ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import {
   ArrowLeft,
   Edit,
@@ -19,10 +19,10 @@ import {
   Blocks,
   Shield
 } from 'lucide-react';
-import { Vehicle } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { Vehicle } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
 import { toast } from 'sonner';
-import BlockchainConfirmModal from './LicensesUI/BlockchainConfirmModal';
+import BlockchainConfirmModal from '@/components/BlockchainConfirmModal';
 
 const statusConfig = {
   valid: { label: 'Còn hiệu lực', color: 'bg-green-500' },
@@ -305,7 +305,7 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
       </div>
 
       {/* Blockchain Confirm Modal */}
-      <BlockchainConfirmModal
+      {/* <BlockchainConfirmModal
         isOpen={isBlockchainModalOpen}
         onClose={() => setBlockchainModalOpen(false)}
         onConfirm={() => {
@@ -313,7 +313,7 @@ export default function VehicleDetailPage({ vehicle, onBack, onEdit }: VehicleDe
           setBlockchainModalOpen(false);
         }}
         vehicle={vehicle}
-      />
+      /> */}
     </div>
   );
 }

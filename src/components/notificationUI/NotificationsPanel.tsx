@@ -1,10 +1,10 @@
 import { motion } from 'motion/react';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './ui/sheet';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Bell, AlertTriangle, Info, CheckCircle, X } from 'lucide-react';
-import { notifications, Notification } from '../lib/mockData';
+import { notifications, Notification } from '@/lib/mockData';
 
 const notificationIcons = {
   info: { icon: Info, color: 'text-blue-500 bg-blue-100' },
@@ -23,7 +23,7 @@ export default function NotificationsPanel({ open, onOpenChange }: Notifications
 
   const getTimeAgo = (date: string) => {
     const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
-    
+
     if (seconds < 60) return 'Vừa xong';
     if (seconds < 3600) return `${Math.floor(seconds / 60)} phút trước`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)} giờ trước`;
@@ -44,22 +44,21 @@ export default function NotificationsPanel({ open, onOpenChange }: Notifications
             Cập nhật mới nhất về hệ thống
           </SheetDescription>
         </SheetHeader>
-        
+
         <ScrollArea className="h-[calc(100vh-8rem)] mt-6">
           <div className="space-y-3">
             {notifications.map((notification, index) => {
               const config = notificationIcons[notification.type];
               const Icon = config.icon;
-              
+
               return (
                 <motion.div
                   key={notification.id}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`p-4 rounded-lg border ${
-                    notification.read ? 'bg-background' : 'bg-muted/50'
-                  } hover:shadow-md transition-all cursor-pointer`}
+                  className={`p-4 rounded-lg border ${notification.read ? 'bg-background' : 'bg-muted/50'
+                    } hover:shadow-md transition-all cursor-pointer`}
                 >
                   <div className="flex gap-3">
                     <div className={`p-2 rounded-full ${config.color} h-fit`}>

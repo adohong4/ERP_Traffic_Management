@@ -24,15 +24,15 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import LicenseManagement from './components/LicensesUI/LicenseManagement';
-import VehicleManagement from './components/VehicleManagement';
-import ViolationsManagement from './components/ViolationsManagement';
+import VehicleManagement from './components/vehicleUI/VehicleManagement';
+import ViolationsManagement from './components/violationUI/ViolationsManagement';
 import ReportsAnalytics from './components/ReportsAnalytics';
 import TrafficAuthoritiesManagement from './components/TrafficAuthoritiesManagement';
-import NewsManagement from './components/NewsManagement';
-import NotificationsManagement from './components/NotificationsManagement';
+import NewsManagement from './components/newsUI/NewsManagement';
+import NotificationsManagement from '@/components/notificationUI/NotificationsManagement';
 import TrashBin from './components/TrashBin';
 import Settings from './components/Settings';
-import NotificationsPanel from './components/NotificationsPanel';
+import NotificationsPanel from '@/components/notificationUI/NotificationsPanel';
 import { notifications } from './lib/mockData';
 import authService from './services/authService';
 
@@ -97,6 +97,13 @@ function AppContent() {
 
   const handleLogout = async () => {
     await authService.logout()
+    if (isConnected) {
+      try {
+        disconnect(); // disconnect wallet
+      } catch (err) {
+        console.error('Disconnect error:', err);
+      }
+    }
     setIsLoggedIn(false);
   };
 

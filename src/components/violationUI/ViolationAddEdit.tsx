@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Textarea } from './ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Save, X, Upload, AlertCircle } from 'lucide-react';
-import { Violation } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Violation } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
+import { ImageWithFallback } from '@/components/image/ImageWithFallback';
 
 interface ViolationAddEditProps {
   violation?: Violation;
@@ -67,11 +67,11 @@ export default function ViolationAddEdit({ violation, onBack, onSave }: Violatio
     setBreadcrumbs([
       { label: 'Trang chính', onClick: onBack, isHome: true },
       { label: 'Quản lý vi phạm', onClick: onBack },
-      ...(isEdit 
+      ...(isEdit
         ? [
-            { label: violation.id, onClick: () => {} },
-            { label: 'Chỉnh sửa' }
-          ]
+          { label: violation.id, onClick: () => { } },
+          { label: 'Chỉnh sửa' }
+        ]
         : [{ label: 'Ghi nhận vi phạm mới' }]
       )
     ]);
@@ -198,7 +198,7 @@ export default function ViolationAddEdit({ violation, onBack, onSave }: Violatio
                       <Label htmlFor="violationType">Loại vi phạm *</Label>
                       <Select
                         value={formData.violationType}
-                        onValueChange={(value) => handleChange('violationType', value)}
+                        onValueChange={(value: any) => handleChange('violationType', value)}
                       >
                         <SelectTrigger className="border-gray-200 focus:border-cyan-400 focus:ring-cyan-400/20">
                           <SelectValue />
@@ -241,7 +241,7 @@ export default function ViolationAddEdit({ violation, onBack, onSave }: Violatio
                       <Label htmlFor="city">Thành phố *</Label>
                       <Select
                         value={formData.city}
-                        onValueChange={(value) => handleChange('city', value)}
+                        onValueChange={(value: any) => handleChange('city', value)}
                       >
                         <SelectTrigger className="border-gray-200 focus:border-cyan-400 focus:ring-cyan-400/20">
                           <SelectValue />
@@ -361,7 +361,7 @@ export default function ViolationAddEdit({ violation, onBack, onSave }: Violatio
                     <Label htmlFor="status">Trạng thái xử lý</Label>
                     <Select
                       value={formData.status}
-                      onValueChange={(value) => handleChange('status', value)}
+                      onValueChange={(value: any) => handleChange('status', value)}
                     >
                       <SelectTrigger className="border-gray-200 focus:border-cyan-400 focus:ring-cyan-400/20">
                         <SelectValue />

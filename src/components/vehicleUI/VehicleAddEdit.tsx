@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Save, X } from 'lucide-react';
-import { Vehicle } from '../lib/mockData';
-import { useBreadcrumb } from './BreadcrumbContext';
+import { Vehicle } from '@/lib/mockData';
+import { useBreadcrumb } from '@/components/BreadcrumbContext';
 
 interface VehicleAddEditProps {
   vehicle?: Vehicle;
@@ -38,11 +38,11 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
     setBreadcrumbs([
       { label: 'Trang chính', onClick: onBack, isHome: true },
       { label: 'Phương tiện', onClick: onBack },
-      ...(isEdit 
+      ...(isEdit
         ? [
-            { label: vehicle.plateNumber, onClick: () => {} },
-            { label: 'Chỉnh sửa' }
-          ]
+          { label: vehicle.plateNumber, onClick: () => { } },
+          { label: 'Chỉnh sửa' }
+        ]
         : [{ label: 'Thêm phương tiện mới' }]
       )
     ]);
@@ -109,9 +109,9 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="vehicleType">Loại xe *</Label>
-                      <Select 
-                        value={formData.vehicleType} 
-                        onValueChange={(value) => handleChange('vehicleType', value)}
+                      <Select
+                        value={formData.vehicleType}
+                        onValueChange={(value: any) => handleChange('vehicleType', value)}
                       >
                         <SelectTrigger id="vehicleType">
                           <SelectValue />
@@ -151,9 +151,9 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
                   <div className="grid gap-4 md:grid-cols-3">
                     <div className="space-y-2">
                       <Label htmlFor="brand">Hãng xe *</Label>
-                      <Select 
-                        value={formData.brand} 
-                        onValueChange={(value) => handleChange('brand', value)}
+                      <Select
+                        value={formData.brand}
+                        onValueChange={(value: any) => handleChange('brand', value)}
                       >
                         <SelectTrigger id="brand">
                           <SelectValue />
@@ -177,9 +177,9 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="color">Màu sắc *</Label>
-                      <Select 
-                        value={formData.color} 
-                        onValueChange={(value) => handleChange('color', value)}
+                      <Select
+                        value={formData.color}
+                        onValueChange={(value: any) => handleChange('color', value)}
                       >
                         <SelectTrigger id="color">
                           <SelectValue />
@@ -196,9 +196,9 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="city">Thành phố *</Label>
-                      <Select 
-                        value={formData.city} 
-                        onValueChange={(value) => handleChange('city', value)}
+                      <Select
+                        value={formData.city}
+                        onValueChange={(value: any) => handleChange('city', value)}
                       >
                         <SelectTrigger id="city">
                           <SelectValue />
@@ -246,9 +246,9 @@ export default function VehicleAddEdit({ vehicle, onBack, onSave }: VehicleAddEd
                   {isEdit && (
                     <div className="space-y-2">
                       <Label htmlFor="status">Trạng thái</Label>
-                      <Select 
-                        value={formData.status} 
-                        onValueChange={(value) => handleChange('status', value)}
+                      <Select
+                        value={formData.status}
+                        onValueChange={(value: any) => handleChange('status', value)}
                       >
                         <SelectTrigger id="status">
                           <SelectValue />
