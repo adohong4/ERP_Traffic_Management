@@ -66,15 +66,18 @@ export const API_ENDPOINTS = {
   },
 
   // Vehicle Management
-  VEHICLES: {
-    BASE: '/vehicles',
-    LIST: '/vehicles',
-    GET: (id: string) => `/vehicles/${id}`,
-    CREATE: '/vehicles',
-    UPDATE: (id: string) => `/vehicles/${id}`,
-    DELETE: (id: string) => `/vehicles/${id}`,
-    SEARCH: '/vehicles/search',
-    STATISTICS: '/vehicles/statistics',
+  VEHICLE: {
+    BASE: '/vehicle',
+    LIST: '/vehicle/getAll',
+    CREATE: '/vehicle/create',
+    UPDATE: (id: string) => `/vehicle/${id}`,
+    DELETE: (id: string) => `/vehicle/${id}`,
+    GET: (id: string) => `/vehicle/${id}`,
+    SEARCH: '/vehicle/search',
+    CONFIRM_BLOCKCHAIN: (id: string) => `/vehicle/${id}/confirm-blockchain`,
+    STATS_TYPE: '/vehicle/stats/type',
+    STATS_BRAND: '/vehicle/stats/brand',
+    STATS_STATUS: '/vehicle/stats/status',
     EXPORT: '/vehicles/export',
     BY_PLATE: (plateNumber: string) => `/vehicles/plate/${plateNumber}`,
     HISTORY: (id: string) => `/vehicles/${id}/history`,
